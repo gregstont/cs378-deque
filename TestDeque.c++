@@ -423,6 +423,69 @@ TEST(TestDeque, bracket_3) {
 }
 
 
+TEST(TestDeque, begin_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(1);
+    d.push_back(2);
+    d.push_back(3);
+    
+    my_deque<int>::iterator temp = d.begin();
+    ASSERT_EQ(*temp, 1);
+    ASSERT_EQ(d[1], 2);
+    ASSERT_EQ(d[1], 2);
+}
+
+TEST(TestDeque, begin_2) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(1);
+    d.push_back(2);
+    d.push_back(3);
+    
+    my_deque<int>::iterator temp = d.begin();
+    ASSERT_EQ(*temp, 1);
+    ASSERT_EQ(d[1], 2);
+    ASSERT_EQ(d[1], 2);
+    
+    d.pop_front();
+    ASSERT_EQ(*d.begin(), 2);
+}
+
+TEST(TestDeque, begin_3) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(1);
+    d.push_back(2);
+    d.push_back(3);
+    
+    my_deque<int>::iterator temp = d.begin();
+    ASSERT_EQ(*temp, 1);
+    ASSERT_EQ(d[1], 2);
+    ASSERT_EQ(d[1], 2);
+    
+    d.pop_front();
+    ASSERT_EQ(*d.begin(), 2);
+    
+    d.push_front(9);
+    ASSERT_EQ(*d.begin(), 9);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

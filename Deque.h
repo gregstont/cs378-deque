@@ -183,7 +183,7 @@ class my_deque {
                  */
                 friend bool operator == (const iterator& lhs, const iterator& rhs) {
                     // <your code>
-                    return true;
+                    return (lhs.owner == rhs.owner) && (lhs.index == rhs.index);
                 }
 
                 /**
@@ -264,8 +264,10 @@ class my_deque {
                 reference operator * () const {
                     // <your code>
                     // dummy is just to be able to compile the skeleton, remove it
-                    static value_type dummy;
-                    return dummy;
+                    //static value_type dummy;
+                    //return dummy;
+                    
+                    return owner->deque_root[index / INITIAL_ROW_SIZE][index % INITIAL_ROW_SIZE];;
                 }
 
                 // -----------
@@ -288,6 +290,7 @@ class my_deque {
                  */
                 iterator& operator ++ () {
                     // <your code>
+                    ++index;
                     assert(valid());
                     return *this;
                 }
@@ -311,6 +314,7 @@ class my_deque {
                  */
                 iterator& operator -- () {
                     // <your code>
+                    --index;
                     assert(valid());
                     return *this;
                 }
@@ -334,6 +338,7 @@ class my_deque {
                  */
                 iterator& operator += (difference_type d) {
                     // <your code>
+                    index += d;
                     assert(valid());
                     return *this;
                 }
@@ -347,10 +352,11 @@ class my_deque {
                  */
                 iterator& operator -= (difference_type d) {
                     // <your code>
+                    index -= d;
                     assert(valid());
                     return *this;
                 }
-        };
+        }; //end iterator
 
     public:
         // --------------
@@ -727,7 +733,7 @@ class my_deque {
          */
         iterator begin () {
             // <your code>
-            return iterator(/* <your arguments> */);
+            return iterator(this, begin_index);
         }
 
         /**
@@ -770,7 +776,7 @@ class my_deque {
          */
         iterator end () {
             // <your code>
-            return iterator(/* <your arguments> */);
+            return iterator(this, end_index);
         }
 
         /**
