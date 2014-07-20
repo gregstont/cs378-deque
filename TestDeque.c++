@@ -1208,14 +1208,11 @@ TEST(TestDeque, insert_1) {
     ASSERT_EQ(d[0], 7);
     ASSERT_EQ(d[1], 9);
     
-    //d.print_deque();
     d.insert(d.begin(), 77);
-    //d.print_deque();
     ASSERT_EQ(d.size(), 3);
     ASSERT_EQ(d[0], 77);
     ASSERT_EQ(d[1], 7);
     ASSERT_EQ(d[2], 9);
-    //d.print_deque();
     
 }
 
@@ -1231,14 +1228,11 @@ TEST(TestDeque, insert_2) {
     ASSERT_EQ(d[0], 7);
     ASSERT_EQ(d[1], 9);
     
-    //d.print_deque();
     d.insert(d.begin(), 77);
-    //d.print_deque();
     ASSERT_EQ(d.size(), 6);
     ASSERT_EQ(d[0], 77);
     ASSERT_EQ(d[1], 7);
     ASSERT_EQ(d[2], 9);
-    //d.print_deque();
     
 }
 
@@ -1251,17 +1245,183 @@ TEST(TestDeque, insert_3) {
     ASSERT_EQ(d[0], 7);
     ASSERT_EQ(d[1], 9);
     
-    //d.print_deque();
+
     d.insert(++d.begin(), 77);
-    //d.print_deque();
+
     ASSERT_EQ(d.size(), 3);
     ASSERT_EQ(d[0], 7);
     ASSERT_EQ(d[1], 77);
     ASSERT_EQ(d[2], 9);
-    //d.print_deque();
     
 }
 
+TEST(TestDeque, equals_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+
+    my_deque<int> e;
+    e.push_back(7);
+    e.push_back(9);
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e, d);
+}
+
+TEST(TestDeque, equals_2) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    my_deque<int> e;
+    e.push_front(9);
+    e.push_front(7);
+    e.push_front(6);
+    e.pop_front();
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e, d);
+}
+
+TEST(TestDeque, equals_3) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    my_deque<int> e;
+    e.push_front(9);
+    e.push_front(7);
+    e.push_front(6);
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e == d, false);
+}
+
+TEST(TestDeque, compare_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    my_deque<int> e;
+    e.push_back(6);
+    e.push_back(9);
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_TRUE(e < d);
+}
+
+TEST(TestDeque, compare_2) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    my_deque<int> e;
+    e.push_back(6);
+    e.push_back(9);
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_FALSE(d < e);
+}
+
+TEST(TestDeque, compare_3) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(6);
+    d.push_back(9);
+    d.push_back(1);
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 6);
+    ASSERT_EQ(d[1], 9);
+    
+    my_deque<int> e;
+    e.push_back(6);
+    e.push_back(9);
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_TRUE(e < d);
+}
+
+TEST(TestDeque, empty_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(6);
+    d.push_back(9);
+    d.push_back(1);
+    ASSERT_FALSE(d.empty());
+    ASSERT_EQ(d[0], 6);
+    ASSERT_EQ(d[1], 9);
+
+}
+TEST(TestDeque, empty_2) {
+    using namespace std;
+    my_deque<int> d;
+    ASSERT_TRUE(d.empty());
+    d.push_back(6);
+    d.push_back(9);
+    d.push_back(1);
+    ASSERT_FALSE(d.empty());
+    ASSERT_EQ(d[0], 6);
+    ASSERT_EQ(d[1], 9);
+    
+}
+TEST(TestDeque, empty_3) {
+    using namespace std;
+    my_deque<int> d;
+    ASSERT_TRUE(d.empty());
+    d.push_back(6);
+    d.push_back(9);
+    d.push_back(1);
+    ASSERT_FALSE(d.empty());
+    ASSERT_EQ(d[0], 6);
+    ASSERT_EQ(d[1], 9);
+    d.clear();
+    ASSERT_TRUE(d.empty());
+}
+
+TEST(TestDeque, destruct_1) {
+    using namespace std;
+    {
+    my_deque<int> d;
+    d.push_back(6);
+    d.push_back(9);
+    d.push_back(1);
+    ASSERT_FALSE(d.empty());
+    ASSERT_EQ(d[0], 6);
+    ASSERT_EQ(d[1], 9);
+    }
+    ASSERT_TRUE(true);
+}
+
+TEST(TestDeque, destruct_2) {
+    using namespace std;
+    {
+    my_deque<int> d;
+    }
+    ASSERT_TRUE(true);
+}
+TEST(TestDeque, destruct_3) {
+    using namespace std;
+    {
+        my_deque<int> d;
+        const my_deque<int> e;
+    }
+    ASSERT_TRUE(true);
+}
 
 
 ////////////////////////////////////////////////////////////////////////////
