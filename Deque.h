@@ -53,19 +53,23 @@ BI destroy (A& a, BI b, BI e) {
 template <typename A, typename II, typename BI>
 BI uninitialized_copy (A& a, II b, II e, BI x) {
     using namespace std;
-    //cout << "un copy" << endl;
+    //cout << "in copy." << endl;
     BI p = x;
     //cout << "un copy2" << endl;
     try {
         //cout << "in loop " << endl;
         while (b != e) {
-            //cout << "uc: " << endl;
+            //cout << "b:" << b->index << " e:" << e->index << endl;
+            //cout << "*b: " << endl;
             //cout << *b << endl;
+
             a.construct(&*x, *b);
+            //cout << "*b4: " << endl;
+            //cout << "*b5: " << endl;
             ++b;
             ++x;
         }
-        //cout << endl;
+        //cout << "done copy" <<  endl;
     }
     catch (...) {
         destroy(a, p, x);
@@ -209,7 +213,11 @@ class my_deque {
                 // -----------
                 // operator ==
                 // -----------
-
+            /*friend std::ostream& operator << (std::ostream& lhs, const iterator& rhs) {
+                using namespace std;
+                cout << "index:" << rhs.index << endl;
+                return lhs;
+            }*/
                 /**
                  * <your documentation>
                  */
@@ -272,7 +280,7 @@ class my_deque {
                 // -----------
                 // constructor
                 // -----------
-
+            
                 /**
                  * <your documentation>
                  */
@@ -413,7 +421,6 @@ class my_deque {
                 // -----------
                 // operator ==
                 // -----------
-
                 /**
                  * <your documentation>
                  */
@@ -499,6 +506,8 @@ class my_deque {
                 reference operator * () const {
                     // <your code>
                     // dummy is just to be able to compile the skeleton, remove it
+                    //using namespace std;
+                    //cout << "* index:" << index << endl;
                     return owner->deque_root[index / INITIAL_ROW_SIZE][index % INITIAL_ROW_SIZE];
                 }
 
@@ -686,7 +695,9 @@ class my_deque {
         /**
          * <your documentation>
          */
-        my_deque (const my_deque& that) {
+    my_deque (const my_deque& that) :
+        _a(that._a)
+    {
 
             // <your code>
             using namespace std;
@@ -707,18 +718,18 @@ class my_deque {
             
             row_count = rows_to_make;
             deque_size = that.deque_size;
-            begin_index = INITIAL_ROW_SIZE / 2; //TODO: should this be somewhere different?
+            begin_index = 0; //INITIAL_ROW_SIZE / 2; //TODO: should this be somewhere different?
             end_index = begin_index + deque_size;
             
             deque_root = pointers;
-            iterator temp = this->begin();
+            //iterator temp = this->begin();
             //cout << "printt" << that[0] << endl;
             //cout << "begin" << that.begin_index << " end" << that.end_index << endl;
             //if(that.begin() == that.end())
             //    cout << "they are equal" << endl;
             //that.begin();
-            //cout << "tag1"  << *(that.begin()) << endl;
-            uninitialized_copy (_a, that.begin(), that.end(), temp); //should start working with const iterator
+            //cout << "tag1 "  << *(that.begin()) << endl;
+            uninitialized_copy (_a, that.begin(), that.end(), begin()); //should start working with const iterator
             //cout << "tag2" << endl;
             assert(valid());
         }

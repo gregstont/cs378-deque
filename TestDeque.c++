@@ -88,6 +88,35 @@ typedef testing::Types<
 
 TYPED_TEST_CASE(TestDeque, my_types);
 
+/*TEST(TestDeque, const_star_1) {
+    //ALL_OF_IT
+    using namespace std;
+    my_deque<int> d(10,3);
+    int tt = 7;
+    //d.push_front(tt);
+    d.pop_front();
+    d.pop_front();
+    d.push_front(7);
+    //d.push_back(9);
+    d.pop_back();
+    d.pop_back();
+    d.pop_back();
+    //d.push_back(9);
+    //cout << "bacl" << *--d.end() << endl;
+    //d.push_front(6);
+    //my_deque<int>::iterator ttt = d.begin();
+    // *d.begin() = 8;
+    //d.print_deque();
+    
+    my_deque<int> e(d);
+    
+    
+    //ASSERT_EQ(e.size(), 46);
+    //ASSERT_EQ(e[0], 8);
+    //d.print_deque();
+}*/
+
+
 TYPED_TEST(TestDeque, Empty) {
     ALL_OF_IT
     deque_type x;
@@ -1897,7 +1926,6 @@ TYPED_TEST(TestDeque, star_2) {
     deque_type d(45,8);
     d.push_back(7);
     //my_deque<int>::iterator ttt = d.begin();
-    //*d.begin() = 8;
     
     
     ASSERT_EQ(d.size(), 46);
@@ -1911,7 +1939,6 @@ TYPED_TEST(TestDeque, star_3) {
     deque_type d(45,8);
     d.push_back(7);
     //my_deque<int>::iterator ttt = d.begin();
-    //*d.begin() = 8;
     
     ASSERT_EQ(d.size(), 46);
     ASSERT_EQ(*d.begin(), 8);
@@ -2413,7 +2440,6 @@ TYPED_TEST(TestDeque, const_star_2) {
     deque_type d(45,8);
     //d.push_back(7);
     //my_deque<int>::iterator ttt = d.begin();
-    //*d.begin() = 8;
     
     const deque_type e(d);
     
@@ -2428,7 +2454,6 @@ TYPED_TEST(TestDeque, const_star_3) {
     d.push_back(7);
     d.pop_back();
     //my_deque<int>::iterator ttt = d.begin();
-    //*d.begin() = 8;
     const deque_type e(d);
     
     ASSERT_EQ(e.size(), 45);
