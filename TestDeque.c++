@@ -48,6 +48,7 @@ To obtain coverage of the test:
 
 #include "Deque.h"
 
+
 #define ALL_OF_IT       typedef typename TestFixture::deque_type      deque_type; \
                         typedef typename TestFixture::allocator_type  allocator_type; \
                         typedef typename TestFixture::value_type      value_type; \
@@ -57,6 +58,7 @@ To obtain coverage of the test:
                         typedef typename TestFixture::const_pointer   const_pointer; \
                         typedef typename TestFixture::reference       reference; \
                         typedef typename TestFixture::const_reference const_reference;
+
 // ---------
 // TestDeque
 // ---------
@@ -88,14 +90,12 @@ TYPED_TEST_CASE(TestDeque, my_types);
 
 TYPED_TEST(TestDeque, Empty) {
     ALL_OF_IT
-
     deque_type x;
     const bool b = x.empty();
     ASSERT_TRUE(b);}
 
 TYPED_TEST(TestDeque, Size) {
     ALL_OF_IT
-
     deque_type x;
     const size_type s = x.size();
     ASSERT_EQ(0, s);}
@@ -106,7 +106,7 @@ TYPED_TEST(TestDeque, push_back_1) {
     using namespace std;
     deque_type d;
     d.push_back(7);
-    ASSERT_EQ(d[0], (value_type)7);
+    ASSERT_EQ(d[0], 7);
 }
 
 TYPED_TEST(TestDeque, push_back_2) {
@@ -140,6 +140,47 @@ TYPED_TEST(TestDeque, push_back_3) {
     //pair<int,int> x = make_pair(3, 4);
     d.push_back(789);
     ASSERT_EQ(d[0], 789);
+}
+
+TYPED_TEST(TestDeque, push_back_4) {
+    
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 8);
+}
+
+TYPED_TEST(TestDeque, push_back_5) {
+    
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 8);
+    d.pop_back();
+    d.push_back(4);
+    ASSERT_EQ(d[1], 4);
+}
+
+TYPED_TEST(TestDeque, push_back_6) {
+    
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 8);
+    d.pop_back();
+    d.push_back(4);
+    ASSERT_EQ(d[1], 4);
+    d.push_back(2);
+    ASSERT_EQ(d[2], 2);
 }
 
 TYPED_TEST(TestDeque, push_front_1) {
@@ -180,14 +221,53 @@ TYPED_TEST(TestDeque, push_front_2) {
     
 }
 
+TYPED_TEST(TestDeque, push_front_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_front(7);
+    d.push_front(6);
+    ASSERT_EQ(d[0], 6);
+}
+
 TYPED_TEST(TestDeque, push_front_4) {
     ALL_OF_IT
     using namespace std;
-    my_deque< pair<int,int> > d;
-    pair<int,int> x = make_pair(3, 4);
-    d.push_front(x);
-    ASSERT_EQ(d[0], make_pair(3, 4));
+    deque_type d;
+    d.push_front(7);
+    d.push_front(6);
+    ASSERT_EQ(d[0], 6);
+    d.push_front(3);
+    ASSERT_EQ(d[0], 3);
 }
+TYPED_TEST(TestDeque, push_front_5) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_front(7);
+    d.push_front(6);
+    ASSERT_EQ(d[0], 6);
+    d.push_front(3);
+    ASSERT_EQ(d[0], 3);
+    d.push_front(2);
+    ASSERT_EQ(d[0], 2);
+}
+TYPED_TEST(TestDeque, push_front_6) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_front(7);
+    d.push_front(6);
+    ASSERT_EQ(d[0], 6);
+    d.push_front(3);
+    ASSERT_EQ(d[0], 3);
+    d.push_front(2);
+    ASSERT_EQ(d[0], 2);
+    d.pop_front();
+    d.push_front(4);
+    ASSERT_EQ(d[0], 4);
+}
+
 
 TYPED_TEST(TestDeque, pop_front_1) {
     ALL_OF_IT
@@ -219,6 +299,44 @@ TYPED_TEST(TestDeque, pop_front_3) {
     d.pop_front();
     ASSERT_EQ(d.size(), 2);
 }
+TYPED_TEST(TestDeque, pop_front_4) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    //d.push_back(6);
+    d.push_back(5);
+    d.pop_front();
+    ASSERT_EQ(d.size(), 1);
+}
+TYPED_TEST(TestDeque, pop_front_5) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(6);
+    d.push_back(5);
+    d.pop_front();
+    ASSERT_EQ(d.size(), 2);
+    d.pop_back();
+    ASSERT_EQ(d.size(), 1);
+}
+TYPED_TEST(TestDeque, pop_front_6) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(6);
+    d.push_back(5);
+    d.pop_front();
+    ASSERT_EQ(d.size(), 2);
+    d.pop_back();
+    ASSERT_EQ(d.size(), 1);
+    d.pop_back();
+    ASSERT_EQ(d.size(), 0);
+}
+
+
 TYPED_TEST(TestDeque, pop_back_1) {
     ALL_OF_IT
     using namespace std;
@@ -249,6 +367,42 @@ TYPED_TEST(TestDeque, pop_back_3) {
     d.pop_back();
     ASSERT_EQ(d.size(), 2);
 }
+TYPED_TEST(TestDeque, pop_back_4) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    //d.push_back(6);
+    d.push_back(5);
+    d.pop_back();
+    ASSERT_EQ(d.size(), 1);
+}
+TYPED_TEST(TestDeque, pop_back_5) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(6);
+    d.push_back(5);
+    d.pop_back();
+    ASSERT_EQ(d.size(), 2);
+    d.pop_back();
+    ASSERT_EQ(d.size(), 1);
+}
+TYPED_TEST(TestDeque, pop_back_6) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(6);
+    d.push_back(5);
+    d.pop_back();
+    ASSERT_EQ(d.size(), 2);
+    d.pop_back();
+    ASSERT_EQ(d.size(), 1);
+    d.pop_back();
+    ASSERT_EQ(d.size(), 0);
+}
 
 TYPED_TEST(TestDeque, front_1) {
     ALL_OF_IT
@@ -259,8 +413,8 @@ TYPED_TEST(TestDeque, front_1) {
     d.push_back(3);
     //d.pop_back();
     //d.print_deque();
-    int tt = d.front();
-    ASSERT_EQ(tt, 1);
+    //int tt = d.front();
+    ASSERT_EQ(d.front(), 1);
 }
 
 TYPED_TEST(TestDeque, front_2) {
@@ -294,6 +448,55 @@ TYPED_TEST(TestDeque, front_3) {
     d.push_front(9);
     ASSERT_EQ(d.front(), 9);
 }
+TYPED_TEST(TestDeque, front_4) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(1);
+    d.push_back(2);
+    d.push_back(3);
+    //d.pop_back();
+    //d.print_deque();
+    //int tt = d.front();
+    ASSERT_EQ(d.front(), 1);
+    d.pop_front();
+    ASSERT_EQ(d.front(), 2);
+}
+TYPED_TEST(TestDeque, front_5) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(1);
+    d.push_back(2);
+    d.push_back(3);
+    //d.pop_back();
+    //d.print_deque();
+    //int tt = d.front();
+    ASSERT_EQ(d.front(), 1);
+    d.pop_front();
+    ASSERT_EQ(d.front(), 2);
+    d.pop_front();
+    ASSERT_EQ(d.front(), 3);
+}
+TYPED_TEST(TestDeque, front_6) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(1);
+    d.push_back(2);
+    d.push_back(3);
+    //d.pop_back();
+    //d.print_deque();
+    //int tt = d.front();
+    ASSERT_EQ(d.front(), 1);
+    d.pop_front();
+    ASSERT_EQ(d.front(), 2);
+    d.push_front(7);
+    ASSERT_EQ(d.front(), 7);
+}
+
+
+
 TYPED_TEST(TestDeque, const_front_1) {
     ALL_OF_IT
     using namespace std;
@@ -350,7 +553,6 @@ TYPED_TEST(TestDeque, back_1) {
     
     ASSERT_EQ(d.back(), 3);
 }
-
 TYPED_TEST(TestDeque, back_2) {
     ALL_OF_IT
     using namespace std;
@@ -363,8 +565,6 @@ TYPED_TEST(TestDeque, back_2) {
     d.pop_back();
     ASSERT_EQ(d.back(), 2);
 }
-
-
 TYPED_TEST(TestDeque, back_3) {
     ALL_OF_IT
     using namespace std;
@@ -377,6 +577,61 @@ TYPED_TEST(TestDeque, back_3) {
     d.pop_back();
     ASSERT_EQ(d.back(), 2);
 }
+TYPED_TEST(TestDeque, back_4) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(1);
+    d.push_back(2);
+    //d.push_back(3);
+    
+    ASSERT_EQ(d.back(), 2);
+}
+TYPED_TEST(TestDeque, back_5) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(1);
+    d.push_back(2);
+    d.push_back(3);
+    
+    ASSERT_EQ(d.back(), 3);
+    d.push_back(9);
+    ASSERT_EQ(d.back(), 9);
+}
+TYPED_TEST(TestDeque, back_6) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(1);
+    d.push_back(2);
+    d.push_back(3);
+    
+    ASSERT_EQ(d.back(), 3);
+    d.push_back(9);
+    ASSERT_EQ(d.back(), 9);
+    d.pop_back();
+    ASSERT_EQ(d.back(), 3);
+}
+TYPED_TEST(TestDeque, back_7) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(1);
+    d.push_back(2);
+    d.push_back(3);
+    
+    ASSERT_EQ(d.back(), 3);
+    d.push_back(9);
+    ASSERT_EQ(d.back(), 9);
+    d.pop_back();
+    ASSERT_EQ(d.back(), 3);
+    d.push_front(66);
+    ASSERT_EQ(d.back(), 3);
+
+}
+
+
 
 TYPED_TEST(TestDeque, at_1) {
     ALL_OF_IT
@@ -1504,39 +1759,1081 @@ TYPED_TEST(TestDeque, destruct_3) {
 ////////////////////////////////////////////////////////////////////////////
 //////      iterator tests
 ////////////////////////////////////////////////////////////////////////////
-/**
-TYPED_TEST(TestDeque, reference_write_1) {
+
+TYPED_TEST(TestDeque, it_equals_1) {
     ALL_OF_IT
     using namespace std;
-    my_deque<int> d(45);
+    deque_type d;
+    d.push_back(7);
+
+    ASSERT_EQ(d.begin() == d.begin(), true);
+}
+
+TYPED_TEST(TestDeque, it_equals_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+
+    ASSERT_EQ(d.begin() == --d.end(), true);
+}
+
+TYPED_TEST(TestDeque, it_equals_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    
+    ASSERT_EQ(++d.begin() == --d.end(), true);
+}
+
+
+
+TYPED_TEST(TestDeque, it_notequals_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    
+    ASSERT_EQ(d.begin() != d.end(), true);
+}
+TYPED_TEST(TestDeque, it_notequals_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    
+    ASSERT_EQ(d.begin() != --d.end(), false);
+}
+TYPED_TEST(TestDeque, it_notequals_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    
+    ASSERT_EQ(++d.begin() != --d.end(), false);
+}
+
+
+
+TYPED_TEST(TestDeque, plus_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    
+    ASSERT_EQ((d.begin() + 1) == --d.end(), true);
+}
+TYPED_TEST(TestDeque, plus_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    
+    ASSERT_EQ((d.begin() + 2) == d.end(), true);
+}
+TYPED_TEST(TestDeque, plus_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    
+    ASSERT_EQ((d.begin() + 1) != --d.end(), false);
+}
+
+
+
+TYPED_TEST(TestDeque, subtract_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    
+    ASSERT_EQ((d.begin() + 1) == (d.end() - 1), true);
+}
+TYPED_TEST(TestDeque, subtract_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    
+    ASSERT_EQ(d.begin() == (d.end() - 2), true);
+}
+TYPED_TEST(TestDeque, subtarct_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    
+    ASSERT_EQ((d.begin() + 1) != (d.end() - 1), false);
+}
+
+
+
+TYPED_TEST(TestDeque, star_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d(45);
     d.push_back(7);
     //my_deque<int>::iterator ttt = d.begin();
     *d.begin() = 8;
     
-    ASSERT_EQ(d.size(), 1);
+    ASSERT_EQ(d.size(), 46);
     ASSERT_EQ(d[0], 8);
     //d.print_deque();
 }
-*/
+
+TYPED_TEST(TestDeque, star_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d(45,8);
+    d.push_back(7);
+    //my_deque<int>::iterator ttt = d.begin();
+    //*d.begin() = 8;
+    
+    
+    ASSERT_EQ(d.size(), 46);
+    ASSERT_EQ(*d.begin(), 8);
+    //d.print_deque();
+}
+
+TYPED_TEST(TestDeque, star_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d(45,8);
+    d.push_back(7);
+    //my_deque<int>::iterator ttt = d.begin();
+    //*d.begin() = 8;
+    
+    ASSERT_EQ(d.size(), 46);
+    ASSERT_EQ(*d.begin(), 8);
+    ASSERT_EQ(*(--d.end()), 7);
+    //d.print_deque();
+}
 
 
 
+TYPED_TEST(TestDeque, inc_pre_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(++d.begin()), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, inc_pre_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(++d.begin()), 3);
+    ASSERT_EQ(*(++++d.begin()), 2);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, inc_pre_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(++d.begin()), 5);
+    ASSERT_EQ(*(++++d.begin()), 1);
+    //d.print_deque();
+}
 
 
 
+TYPED_TEST(TestDeque, inc_post_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()++), 7);
+    //d.print_deque();
+}
+
+TYPED_TEST(TestDeque, inc_post_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(d.begin()++), 7);
+    ASSERT_EQ(*((++d.begin())++), 3);
+    //d.print_deque();
+}
+
+TYPED_TEST(TestDeque, inc_post_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(d.begin()++), 7);
+    ASSERT_EQ(*((++d.begin())++), 5);
+    //d.print_deque();
+}
+              
+              
+
+TYPED_TEST(TestDeque, dec_pre_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(--d.end()), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, dec_pre_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(--d.end()), 2);
+    ASSERT_EQ(*(----d.end()), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, dec_pre_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(--d.end()), 1);
+    ASSERT_EQ(*(----d.end()), 5);
+    //d.print_deque();
+}
 
 
 
+TYPED_TEST(TestDeque, dec_post_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()--), 7);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, dec_post_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    //ASSERT_EQ(*(d.end()--), 7);
+    ASSERT_EQ(*((--d.end())--), 2);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, dec_post_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(d.begin()--), 7);
+    ASSERT_EQ(*((--d.end())--), 1);
+    //d.print_deque();
+}
 
 
 
+TYPED_TEST(TestDeque, plus_eq_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin() += 1), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, plus_eq_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(d.begin() += 1), 3);
+    ASSERT_EQ(*(d.begin() += 2), 2);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, plus_eq_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(d.begin() += 1), 5);
+    ASSERT_EQ(*(d.begin() += 2), 1);
+    //d.print_deque();
+}
 
 
 
+TYPED_TEST(TestDeque, minus_eq_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.end() -= 1), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, minus_eq_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(d.end() -= 1), 2);
+    ASSERT_EQ(*(d.end() -= 2), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, minus_eq_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(d.end() -= 1), 1);
+    ASSERT_EQ(*(d.end() -= 2), 5);
+    //d.print_deque();
+}
 
 
 
+TYPED_TEST(TestDeque, it_cons_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(d.end() -= 1), 1);
+    ASSERT_EQ(*(d.end() -= 2), 5);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, it_cons_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(d.end() -= 1), 2);
+    ASSERT_EQ(*(d.end() -= 2), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, it_cons_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    
+    ASSERT_EQ(*(d.begin()), 7);
+    ASSERT_EQ(*(d.end() -= 1), 1);
+    ASSERT_EQ(*(d.end() -= 2), 5);
+    //d.print_deque();
+}
 
+////////////////////////////////////////////////////////////////////////////
+//////      const iterator tests
+////////////////////////////////////////////////////////////////////////////
+
+
+TYPED_TEST(TestDeque, const_it_equals_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.begin() == e.begin(), true);
+}
+TYPED_TEST(TestDeque, const_it_equals_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    const deque_type e(d);
+    
+    ASSERT_EQ(d.begin() == --d.end(), true);
+}
+TYPED_TEST(TestDeque, const_it_equals_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    const deque_type e(d);
+    
+    ASSERT_EQ(++e.begin() == --e.end(), true);
+}
+
+
+
+TYPED_TEST(TestDeque, const_it_notequals_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.begin() != e.end(), true);
+}
+TYPED_TEST(TestDeque, const_it_notequals_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    const deque_type e(d);
+    
+    ASSERT_EQ(d.begin() != --d.end(), false);
+}
+TYPED_TEST(TestDeque, const_it_notequals_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    const deque_type e(d);
+    
+    ASSERT_EQ(++e.begin() != --e.end(), false);
+}
+
+
+
+TYPED_TEST(TestDeque, const_plus_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    const deque_type e(d);
+    
+    ASSERT_EQ((e.begin() + 1) == --e.end(), true);
+}
+
+TYPED_TEST(TestDeque, const_plus_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    const deque_type e(d);
+    
+    ASSERT_EQ((e.begin() + 2) == e.end(), true);
+}
+TYPED_TEST(TestDeque, const_plus_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    const deque_type e(d);
+    
+    ASSERT_EQ((e.begin() + 1) != --e.end(), false);
+}
+
+
+
+TYPED_TEST(TestDeque, const_subtract_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    const deque_type e(d);
+    
+    ASSERT_EQ((e.begin() + 1) == (e.end() - 1), true);
+}
+
+TYPED_TEST(TestDeque, const_subtract_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.begin() == (e.end() - 2), true);
+}
+TYPED_TEST(TestDeque, const_subtract_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(8);
+    const deque_type e(d);
+    
+    ASSERT_EQ((e.begin() + 1) != (e.end() - 1), false);
+}
+
+
+
+TYPED_TEST(TestDeque, const_star_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque<int> d(45,3);
+    
+    const deque<int> e(d);
+
+    
+    ASSERT_EQ(e.size(), 45);
+    ASSERT_EQ(*e.begin(), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_star_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d(45,8);
+    //d.push_back(7);
+    //my_deque<int>::iterator ttt = d.begin();
+    //*d.begin() = 8;
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 45);
+    ASSERT_EQ(*e.begin(), 8);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_star_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d(45,8);
+    d.push_back(7);
+    d.pop_back();
+    //my_deque<int>::iterator ttt = d.begin();
+    //*d.begin() = 8;
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 45);
+    ASSERT_EQ(*e.begin(), 8);
+    ASSERT_EQ(*(--e.end()), 8);
+    //d.print_deque();
+}
+
+
+
+TYPED_TEST(TestDeque, const_inc_pre_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(++e.begin()), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_inc_pre_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(++e.begin()), 3);
+    ASSERT_EQ(*(++++e.begin()), 2);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_inc_pre_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(++e.begin()), 5);
+    ASSERT_EQ(*(++++e.begin()), 1);
+    //d.print_deque();
+}
+
+
+
+TYPED_TEST(TestDeque, const_inc_post_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()++), 7);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_inc_post_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(e.begin()++), 7);
+    ASSERT_EQ(*((++e.begin())++), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_inc_post_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(e.begin()++), 7);
+    ASSERT_EQ(*((++e.begin())++), 5);
+    //d.print_deque();
+}
+
+TYPED_TEST(TestDeque, const_dec_pre_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(--e.end()), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_dec_pre_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(--e.end()), 2);
+    ASSERT_EQ(*(----e.end()), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_dec_pre_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(--e.end()), 1);
+    ASSERT_EQ(*(----e.end()), 5);
+    //d.print_deque();
+}
+
+
+
+TYPED_TEST(TestDeque, const_dec_post_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()--), 7);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_dec_post_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    //ASSERT_EQ(*(d.end()--), 7);
+    ASSERT_EQ(*((--e.end())--), 2);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_dec_post_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(e.begin()--), 7);
+    ASSERT_EQ(*((--e.end())--), 1);
+    //d.print_deque();
+}
+
+
+
+TYPED_TEST(TestDeque, const_plus_eq_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin() += 1), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_plus_eq_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(e.begin() += 1), 3);
+    ASSERT_EQ(*(e.begin() += 2), 2);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_plus_eq_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(e.begin() += 1), 5);
+    ASSERT_EQ(*(e.begin() += 2), 1);
+    //d.print_deque();
+}
+
+
+
+TYPED_TEST(TestDeque, const_minus_eq_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.end() -= 1), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_minus_eq_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(e.end() -= 1), 2);
+    ASSERT_EQ(*(e.end() -= 2), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_minus_eq_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(e.end() -= 1), 1);
+    ASSERT_EQ(*(e.end() -= 2), 5);
+    //d.print_deque();
+}
+
+
+
+TYPED_TEST(TestDeque, const_it_cons_1) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.end() -= 1), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_it_cons_2) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(3);
+    d.push_back(2);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(e.end() -= 2), 3);
+    //d.print_deque();
+}
+TYPED_TEST(TestDeque, const_it_cons_3) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(5);
+    d.push_back(1);
+    
+    const deque_type e(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    
+    ASSERT_EQ(*(e.begin()), 7);
+    ASSERT_EQ(*(e.end() -= 1), 1);
+}
+
+/*
+ WEIRD BUG -  not a const thing
+ 
+ TYPED_TEST(TestDeque, const_star_1) {
+ ALL_OF_IT
+ using namespace std;
+ my_deque<int> d(45,3);
+ d.push_back(7);
+ //d.pop_back();
+ cout << "bacl" << *--d.end() << endl;
+ //d.push_front(6);
+ //my_deque<int>::iterator ttt = d.begin();
+ // *d.begin() = 8;
+ //d.print_deque();
+ 
+ const my_deque<int> e(d);
+ 
+ 
+ //ASSERT_EQ(e.size(), 46);
+ //ASSERT_EQ(e[0], 8);
+ //d.print_deque();
+ }
+ 
+ */
 
 
 

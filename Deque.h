@@ -53,10 +53,14 @@ BI destroy (A& a, BI b, BI e) {
 template <typename A, typename II, typename BI>
 BI uninitialized_copy (A& a, II b, II e, BI x) {
     using namespace std;
+    //cout << "un copy" << endl;
     BI p = x;
+    //cout << "un copy2" << endl;
     try {
+        //cout << "in loop " << endl;
         while (b != e) {
-            //cout << "uc:" << *b << " ";
+            //cout << "uc: " << endl;
+            //cout << *b << endl;
             a.construct(&*x, *b);
             ++b;
             ++x;
@@ -565,7 +569,7 @@ class my_deque {
                  */
                 const_iterator& operator += (difference_type d) {
                     // <your code>
-                    index += d
+                    index += d;
                     assert(valid());
                     return *this;
                 }
@@ -686,11 +690,12 @@ class my_deque {
 
             // <your code>
             using namespace std;
+            
             //BI uninitialized_copy (A& a, II b, II e, BI x) {
             
             
             size_type rows_to_make = (that.deque_size + 9) / INITIAL_ROW_SIZE;
-            //cout << "rows to make " << rows_to_make;
+            //cout << "rows to make " << rows_to_make << endl;
             T** pointers = _ap.allocate(rows_to_make);
             
             T* temp_p;
@@ -712,9 +717,9 @@ class my_deque {
             //if(that.begin() == that.end())
             //    cout << "they are equal" << endl;
             //that.begin();
-            
+            //cout << "tag1"  << *(that.begin()) << endl;
             uninitialized_copy (_a, that.begin(), that.end(), temp); //should start working with const iterator
-            
+            //cout << "tag2" << endl;
             assert(valid());
         }
 
