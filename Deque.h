@@ -43,7 +43,8 @@ BI destroy (A& a, BI b, BI e) {
     while (b != e) {
         --e;
         a.destroy(&*e);}
-    return b;}
+    return b;
+}
 
 // ------------------
 // uninitialized_copy
@@ -60,7 +61,8 @@ BI uninitialized_copy (A& a, II b, II e, BI x) {
     catch (...) {
         destroy(a, p, x);
         throw;}
-    return x;}
+    return x;
+}
 
 // ------------------
 // uninitialized_fill
@@ -76,7 +78,8 @@ BI uninitialized_fill (A& a, BI b, BI e, const U& v) {
     catch (...) {
         destroy(a, p, b);
         throw;}
-    return e;}
+    return e;
+}
 
 // -------
 // my_deque
@@ -112,7 +115,8 @@ class my_deque {
         friend bool operator == (const my_deque& lhs, const my_deque& rhs) {
             // <your code>
             // you must use std::equal()
-            return true;}
+            return true;
+        }
 
         // ----------
         // operator <
@@ -124,7 +128,8 @@ class my_deque {
         friend bool operator < (const my_deque& lhs, const my_deque& rhs) {
             // <your code>
             // you must use std::lexicographical_compare()
-            return true;}
+            return true;
+        }
 
     private:
         // ----
@@ -148,7 +153,8 @@ class my_deque {
 
         bool valid () const {
             // <your code>
-            return true;}
+            return true;
+        }
 
     public:
         // --------
@@ -177,13 +183,15 @@ class my_deque {
                  */
                 friend bool operator == (const iterator& lhs, const iterator& rhs) {
                     // <your code>
-                    return true;}
+                    return true;
+                }
 
                 /**
                  * <your documentation>
                  */
                 friend bool operator != (const iterator& lhs, const iterator& rhs) {
-                    return !(lhs == rhs);}
+                    return !(lhs == rhs);
+                }
 
                 // ----------
                 // operator +
@@ -193,7 +201,8 @@ class my_deque {
                  * <your documentation>
                  */
                 friend iterator operator + (iterator lhs, difference_type rhs) {
-                    return lhs += rhs;}
+                    return lhs += rhs;
+                }
 
                 // ----------
                 // operator -
@@ -203,7 +212,8 @@ class my_deque {
                  * <your documentation>
                  */
                 friend iterator operator - (iterator lhs, difference_type rhs) {
-                    return lhs -= rhs;}
+                    return lhs -= rhs;
+                }
 
             private:
                 // ----
@@ -211,6 +221,8 @@ class my_deque {
                 // ----
 
                 // <your data>
+                my_deque *owner;
+                size_t index;
 
             private:
                 // -----
@@ -219,7 +231,8 @@ class my_deque {
 
                 bool valid () const {
                     // <your code>
-                    return true;}
+                    return true;
+                }
 
             public:
                 // -----------
@@ -229,9 +242,12 @@ class my_deque {
                 /**
                  * <your documentation>
                  */
-                iterator (/* <your arguments> */) {
+                iterator (my_deque *owner_, size_t index_) {
                     // <your code>
-                    assert(valid());}
+                    owner = owner_;
+                    index = index_;
+                    assert(valid());
+                }
 
                 // Default copy, destructor, and copy assignment.
                 // iterator (const iterator&);
@@ -249,7 +265,8 @@ class my_deque {
                     // <your code>
                     // dummy is just to be able to compile the skeleton, remove it
                     static value_type dummy;
-                    return dummy;}
+                    return dummy;
+                }
 
                 // -----------
                 // operator ->
@@ -259,7 +276,8 @@ class my_deque {
                  * <your documentation>
                  */
                 pointer operator -> () const {
-                    return &**this;}
+                    return &**this;
+                }
 
                 // -----------
                 // operator ++
@@ -271,7 +289,8 @@ class my_deque {
                 iterator& operator ++ () {
                     // <your code>
                     assert(valid());
-                    return *this;}
+                    return *this;
+                }
 
                 /**
                  * <your documentation>
@@ -280,7 +299,8 @@ class my_deque {
                     iterator x = *this;
                     ++(*this);
                     assert(valid());
-                    return x;}
+                    return x;
+                }
 
                 // -----------
                 // operator --
@@ -292,7 +312,8 @@ class my_deque {
                 iterator& operator -- () {
                     // <your code>
                     assert(valid());
-                    return *this;}
+                    return *this;
+                }
 
                 /**
                  * <your documentation>
@@ -301,7 +322,8 @@ class my_deque {
                     iterator x = *this;
                     --(*this);
                     assert(valid());
-                    return x;}
+                    return x;
+                }
 
                 // -----------
                 // operator +=
@@ -313,7 +335,8 @@ class my_deque {
                 iterator& operator += (difference_type d) {
                     // <your code>
                     assert(valid());
-                    return *this;}
+                    return *this;
+                }
 
                 // -----------
                 // operator -=
@@ -325,7 +348,9 @@ class my_deque {
                 iterator& operator -= (difference_type d) {
                     // <your code>
                     assert(valid());
-                    return *this;}};
+                    return *this;
+                }
+        };
 
     public:
         // --------------
@@ -592,7 +617,8 @@ class my_deque {
          */
         my_deque (const my_deque& that) {
             // <your code>
-            assert(valid());}
+            assert(valid());
+        }
 
         // ----------
         // destructor
@@ -603,7 +629,8 @@ class my_deque {
          */
         ~my_deque () {
             // <your code>
-            assert(valid());}
+            assert(valid());
+        }
 
         // ----------
         // operator =
@@ -615,7 +642,8 @@ class my_deque {
         my_deque& operator = (const my_deque& rhs) {
             // <your code>
             assert(valid());
-            return *this;}
+            return *this;
+        }
 
         // -----------
         // operator []
@@ -638,7 +666,8 @@ class my_deque {
          * <your documentation>
          */
         const_reference operator [] (size_type index) const {
-            return const_cast<my_deque*>(this)->operator[](index);}
+            return const_cast<my_deque*>(this)->operator[](index);
+        }
 
         // --
         // at
@@ -650,14 +679,20 @@ class my_deque {
         reference at (size_type index) {
             // <your code>
             // dummy is just to be able to compile the skeleton, remove it
-            static value_type dummy;
-            return dummy;}
+            //static value_type dummy;
+            //return dummy;
+            if(index >= deque_size)
+                throw std::out_of_range("at index out of range");
+            size_type temp = index + begin_index;
+            return deque_root[temp / INITIAL_ROW_SIZE][temp % INITIAL_ROW_SIZE];
+        }
 
         /**
          * <your documentation>
          */
         const_reference at (size_type index) const {
-            return const_cast<my_deque*>(this)->at(index);}
+            return const_cast<my_deque*>(this)->at(index);
+        }
 
         // ----
         // back
@@ -669,14 +704,19 @@ class my_deque {
         reference back () {
             // <your code>
             // dummy is just to be able to compile the skeleton, remove it
-            static value_type dummy;
-            return dummy;}
+            
+            return deque_root[(end_index - 1) / INITIAL_ROW_SIZE][(end_index - 1) % INITIAL_ROW_SIZE];
+            
+            //static value_type dummy;
+            //return dummy;
+        }
 
         /**
          * <your documentation>
          */
         const_reference back () const {
-            return const_cast<my_deque*>(this)->back();}
+            return const_cast<my_deque*>(this)->back();
+        }
 
         // -----
         // begin
@@ -687,14 +727,16 @@ class my_deque {
          */
         iterator begin () {
             // <your code>
-            return iterator(/* <your arguments> */);}
+            return iterator(/* <your arguments> */);
+        }
 
         /**
          * <your documentation>
          */
         const_iterator begin () const {
             // <your code>
-            return const_iterator(/* <your arguments> */);}
+            return const_iterator(/* <your arguments> */);
+        }
 
         // -----
         // clear
@@ -705,7 +747,8 @@ class my_deque {
          */
         void clear () {
             // <your code>
-            assert(valid());}
+            assert(valid());
+        }
 
         // -----
         // empty
@@ -715,7 +758,8 @@ class my_deque {
          * <your documentation>
          */
         bool empty () const {
-            return !size();}
+            return !size();
+        }
 
         // ---
         // end
@@ -726,14 +770,16 @@ class my_deque {
          */
         iterator end () {
             // <your code>
-            return iterator(/* <your arguments> */);}
+            return iterator(/* <your arguments> */);
+        }
 
         /**
          * <your documentation>
          */
         const_iterator end () const {
             // <your code>
-            return const_iterator(/* <your arguments> */);}
+            return const_iterator(/* <your arguments> */);
+        }
 
         // -----
         // erase
@@ -745,7 +791,8 @@ class my_deque {
         iterator erase (iterator) {
             // <your code>
             assert(valid());
-            return iterator();}
+            return iterator();
+        }
 
         // -----
         // front
@@ -757,8 +804,14 @@ class my_deque {
         reference front () {
             // <your code>
             // dummy is just to be able to compile the skeleton, remove it
-            static value_type dummy;
-            return dummy;}
+            //static value_type dummy;
+            //return (this)[begin_index];
+            //return dummy;
+            //size_type temp = index + begin_index;
+            return deque_root[begin_index / INITIAL_ROW_SIZE][begin_index % INITIAL_ROW_SIZE];
+            
+            //return (*this)[begin_index];
+        }
 
         /**
          * <your documentation>
@@ -776,7 +829,8 @@ class my_deque {
         iterator insert (iterator, const_reference) {
             // <your code>
             assert(valid());
-            return iterator();}
+            return iterator();
+        }
 
         // ---
         // pop
@@ -791,7 +845,8 @@ class my_deque {
                 --end_index;
                 --deque_size;
             }
-            assert(valid());}
+            assert(valid());
+        }
 
         /**
          * <your documentation>
@@ -802,7 +857,8 @@ class my_deque {
                 ++begin_index;
                 --deque_size;
             }
-            assert(valid());}
+            assert(valid());
+        }
 
         // ----
         // push
@@ -839,7 +895,8 @@ class my_deque {
             ++deque_size;
             
             
-            assert(valid());}
+            assert(valid());
+        }
 
         /**
          * <your documentation>
@@ -869,7 +926,8 @@ class my_deque {
             --begin_index;
             _a.construct(&deque_root[begin_index / INITIAL_ROW_SIZE][begin_index % INITIAL_ROW_SIZE], val);
             ++deque_size;
-            assert(valid());}
+            assert(valid());
+        }
 
         // ------
         // resize
@@ -880,7 +938,8 @@ class my_deque {
          */
         void resize (size_type s, const_reference v = value_type()) {
             // <your code>
-            assert(valid());}
+            assert(valid());
+        }
 
         // ----
         // size
@@ -891,7 +950,8 @@ class my_deque {
          */
         size_type size () const {
             // <your code>
-            return deque_size;}
+            return deque_size;
+        }
 
         // ----
         // swap
@@ -902,6 +962,8 @@ class my_deque {
          */
         void swap (my_deque&) {
             // <your code>
-            assert(valid());}};
+            assert(valid());
+        }
+};
 
 #endif // Deque_h
