@@ -106,3 +106,137 @@ TYPED_TEST(TestDeque, Size) {
     deque_type x;
     const size_type s = x.size();
     ASSERT_EQ(0, s);}
+
+TEST(TestDeque, push_back_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    ASSERT_EQ(d[0], 7);
+}
+
+TEST(TestDeque, push_back_2) {
+    using namespace std;
+    my_deque<int> d;
+    //d.print_deque();
+    d.push_back(7);
+    d.push_back(6);
+    d.push_back(5);
+    d.push_back(4);
+    d.push_back(3);
+    d.push_back(2);
+    d.push_back(1);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 6);
+    ASSERT_EQ(d[2], 5);
+    ASSERT_EQ(d[3], 4);
+    ASSERT_EQ(d[4], 3);
+    ASSERT_EQ(d[5], 2);
+    ASSERT_EQ(d[6], 1);
+    
+    //d.print_deque();
+    //cout << "fff" << d[1] << endl;
+    /*const int a[] = {2, 3, 4};
+    const int b[] = {2, 3, 4};
+    int x[10];
+    const int* p = shift_right_digits(a, a + 3, 0, x);
+    ASSERT_EQ(3, p - x);
+    ASSERT_TRUE(std::equal(const_cast<const int*>(x), p, b));*/
+}
+
+
+TEST(TestDeque, push_back_3) {
+    using namespace std;
+    my_deque< pair<int,int> > d;
+    pair<int,int> x = make_pair(3, 4);
+    d.push_back(x);
+    ASSERT_EQ(d[0], make_pair(3, 4));
+}
+
+TEST(TestDeque, push_front_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_front(7);
+    ASSERT_EQ(d[0], 7);
+}
+
+TEST(TestDeque, push_front_2) {
+    using namespace std;
+    my_deque<int> d;
+    //d.print_deque();
+    d.push_front(7);
+    d.push_front(6);
+    d.push_front(5);
+    d.push_front(4);
+    d.push_front(3);
+    d.push_front(2);
+    d.push_front(1);
+    ASSERT_EQ(d[0], 1);
+    ASSERT_EQ(d[1], 2);
+    ASSERT_EQ(d[2], 3);
+    ASSERT_EQ(d[3], 4);
+    ASSERT_EQ(d[4], 5);
+    ASSERT_EQ(d[5], 6);
+    ASSERT_EQ(d[6], 7);
+    
+}
+
+TEST(TestDeque, push_front_3) {
+    using namespace std;
+    my_deque< pair<int,int> > d;
+    pair<int,int> x = make_pair(3, 4);
+    d.push_front(x);
+    ASSERT_EQ(d[0], make_pair(3, 4));
+}
+
+TEST(TestDeque, pop_front_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(6);
+    d.push_back(5);
+    d.pop_front();
+    ASSERT_EQ(d.size(), 2);
+}
+
+TEST(TestDeque, pop_front_2) {
+    using namespace std;
+    my_deque<int> d;
+    d.pop_front();
+    ASSERT_EQ(d.size(), 0);
+}
+
+TEST(TestDeque, pop_front_3) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_front(7);
+    d.push_front(6);
+    d.push_front(5);
+    d.pop_front();
+    ASSERT_EQ(d.size(), 2);
+}
+TEST(TestDeque, pop_back_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(6);
+    d.push_back(5);
+    d.pop_back();
+    ASSERT_EQ(d.size(), 2);
+}
+
+TEST(TestDeque, pop_back_2) {
+    using namespace std;
+    my_deque<int> d;
+    d.pop_back();
+    ASSERT_EQ(d.size(), 0);
+}
+
+TEST(TestDeque, pop_back_3) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_front(7);
+    d.push_front(6);
+    d.push_front(5);
+    d.pop_back();
+    ASSERT_EQ(d.size(), 2);
+}

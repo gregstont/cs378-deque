@@ -28,8 +28,8 @@
 		340B717A197B20570097343E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		340B717B197B20570097343E /* TestDeque.c++ */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = "TestDeque.c++"; sourceTree = "<group>"; };
 		340B717C197B20570097343E /* TestDeque.sample.out */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestDeque.sample.out; sourceTree = "<group>"; };
-		344F03B5197B20DC00E4F9C5 /* cs378-deque */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "cs378-deque"; path = "/Users/taylor/Desktop/cs378/project4/private/build/Debug/cs378-deque"; sourceTree = "<absolute>"; };
 		344F03B6197B20E700E4F9C5 /* makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = makefile; sourceTree = "<group>"; };
+		34AAB158197B224E00A5FA86 /* cs378-deque */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; name = "cs378-deque"; path = "/Users/taylor/Desktop/cs378/project4/private/build/Debug/cs378-deque"; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +71,7 @@
 			);
 			name = "cs378-deque";
 			productName = "cs378-deque";
-			productReference = 344F03B5197B20DC00E4F9C5 /* cs378-deque */;
+			productReference = 34AAB158197B224E00A5FA86 /* cs378-deque */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */

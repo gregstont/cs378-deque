@@ -28,6 +28,13 @@ using std::rel_ops::operator>;
 using std::rel_ops::operator>=;
 
 // -------
+// defines
+// -------
+
+#define INITIAL_ROW_SIZE 10
+
+
+// -------
 // destroy
 // -------
 
@@ -125,6 +132,12 @@ class my_deque {
         // ----
 
         allocator_type _a;
+        typename A::template rebind<T*>::other _ap;
+        T** deque_root;
+        size_t row_count;   //number of rows
+        size_t deque_size;  //how many elements in here
+        size_t begin_index; //where is the begining?
+        size_t end_index;   //where is the end?
 
         // <your data>
 
@@ -492,6 +505,20 @@ class my_deque {
                     return *this;}};
 
     public:
+    
+        void print_deque() {
+            using namespace std;
+            cout << "Printing; size:" << deque_size << " rows:" << row_count << endl;
+            for(size_t i = 0; i < row_count; ++i) {
+                cout << "\tROW" << i << ": ";
+                for(int j = 0; j < INITIAL_ROW_SIZE; ++j) {
+                    //T temp = deque_root[i][j];
+                    cout << deque_root[i][j] << "  ";
+                }
+                cout << endl;
+            }
+            cout << "Done printing" << endl;
+        }
         // ------------
         // constructors
         // ------------
@@ -499,16 +526,66 @@ class my_deque {
         /**
          * <your documentation>
          */
-        explicit my_deque (const allocator_type& a = allocator_type()) {
+        explicit my_deque (const allocator_type& a = allocator_type()) :
+            _a(a) //do I need this?
+        {
             // <your code>
-            assert(valid());}
+            using namespace std;
+            
+            
+            //construct initial deque, 1 row
+            T* the_first_row = _a.allocate(INITIAL_ROW_SIZE);
+            //T temp;// = 4;
+            //uninitialized_fill (_a, the_first_row, the_first_row + INITIAL_ROW_SIZE, temp );
+            
+            //construct the pointers (just one for now)
+            //typename A::template rebind<T*>::other _a2;
+            T** pointers = _ap.allocate(1);
+            T* temp_p;
+            uninitialized_fill (_ap, pointers, pointers + 1, temp_p );
+            
+            row_count = 1;
+            deque_size = 0;
+            begin_index = INITIAL_ROW_SIZE / 2;
+            end_index = begin_index;
+            
+            (*pointers) = the_first_row;
+            
+            deque_root = pointers;
+            
+            
+            //cout << "HEWERREREE" << endl;
+            assert(valid());
+        }
 
         /**
          * <your documentation>
          */
         explicit my_deque (size_type s, const_reference v = value_type(), const allocator_type& a = allocator_type()) {
             // <your code>
-            assert(valid());}
+            /*
+            using namespace std;
+            
+            
+            //construct initial deque, 1 row
+            T* the_first_row = _a.allocate(INITIAL_ROW_SIZE);
+            //T temp;// = 4;
+            uninitialized_fill (_a, the_first_row, the_first_row + INITIAL_ROW_SIZE, v );
+            
+            //construct the pointers (just one for now)
+            typename A::template rebind<T*>::other _a2;
+            T** pointers = _a2.allocate(1);
+            T* temp_p;
+            uninitialized_fill (_a2, pointers, pointers + 1, temp_p );
+            
+            row_count = 1;
+            
+            (*pointers) = the_first_row;
+            
+            deque_root = pointers;
+            */
+            assert(valid());
+        }
 
         /**
          * <your documentation>
@@ -550,8 +627,12 @@ class my_deque {
         reference operator [] (size_type index) {
             // <your code>
             // dummy is just to be able to compile the skeleton, remove it
-            static value_type dummy;
-            return dummy;}
+            
+            size_type temp = index + begin_index;
+            return deque_root[temp / INITIAL_ROW_SIZE][temp % INITIAL_ROW_SIZE];
+            //static value_type dummy;
+            //return dummy;
+        }
 
         /**
          * <your documentation>
@@ -706,6 +787,10 @@ class my_deque {
          */
         void pop_back () {
             // <your code>
+            if(begin_index != end_index) {
+                --end_index;
+                --deque_size;
+            }
             assert(valid());}
 
         /**
@@ -713,6 +798,10 @@ class my_deque {
          */
         void pop_front () {
             // <your code>
+            if(begin_index != end_index) {
+                ++begin_index;
+                --deque_size;
+            }
             assert(valid());}
 
         // ----
@@ -722,15 +811,64 @@ class my_deque {
         /**
          * <your documentation>
          */
-        void push_back (const_reference) {
+        void push_back (const_reference val) {
             // <your code>
+            using namespace std;
+            //cout << "push_back:" << val << endl;
+            if((end_index % INITIAL_ROW_SIZE == 0) && (end_index / INITIAL_ROW_SIZE == row_count)) { //row full
+                //cout << "adding row" << endl;
+                //add new row pointer
+                T** new_pointers = _ap.allocate(row_count + 1); //BI uninitialized_copy (A& a, II b, II e, BI x) {
+                uninitialized_copy (_ap, deque_root, deque_root + row_count, new_pointers);
+                
+                //destroy old pointers
+                destroy(_ap, deque_root, deque_root + row_count);
+                
+                //point to new
+                deque_root = new_pointers;
+                
+                ++row_count;
+                
+                //allocate new row
+                deque_root[row_count - 1] = _a.allocate(INITIAL_ROW_SIZE);
+                
+            }
+            //else { //no need for else?
+            _a.construct(&deque_root[end_index / INITIAL_ROW_SIZE][end_index % INITIAL_ROW_SIZE], val);
+            ++end_index;
+            ++deque_size;
+            
+            
             assert(valid());}
 
         /**
          * <your documentation>
          */
-        void push_front (const_reference) {
+        void push_front (const_reference val) {
             // <your code>
+            using namespace std;
+            if(begin_index == 0) { //add row
+                //cout << "adding row" << endl;
+                //add new row pointer
+                T** new_pointers = _ap.allocate(row_count + 1); //BI uninitialized_copy (A& a, II b, II e, BI x) {
+                uninitialized_copy (_ap, deque_root, deque_root + row_count, new_pointers + 1);
+                
+                //destroy old pointers
+                destroy(_ap, deque_root, deque_root + row_count);
+                
+                //point to new
+                deque_root = new_pointers;
+                
+                ++row_count;
+                //allocate new row
+                deque_root[0] = _a.allocate(INITIAL_ROW_SIZE);
+                begin_index += INITIAL_ROW_SIZE;
+                end_index += INITIAL_ROW_SIZE;
+            }
+            
+            --begin_index;
+            _a.construct(&deque_root[begin_index / INITIAL_ROW_SIZE][begin_index % INITIAL_ROW_SIZE], val);
+            ++deque_size;
             assert(valid());}
 
         // ------
@@ -753,7 +891,7 @@ class my_deque {
          */
         size_type size () const {
             // <your code>
-            return 0;}
+            return deque_size;}
 
         // ----
         // swap
