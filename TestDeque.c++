@@ -916,7 +916,357 @@ TEST(TestDeque, assignment_3) {
     //d.print_deque();
 }
 
+TEST(TestDeque, swap_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    my_deque<int> e;
+    e.push_back(6);
+    e.push_back(8);
+    
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e[0], 6);
+    ASSERT_EQ(e[1], 8);
+    
+    e.swap(d);
+    
+    ASSERT_EQ(e[0], 7);
+    ASSERT_EQ(e[1], 9);
+    ASSERT_EQ(d[0], 6);
+    ASSERT_EQ(d[1], 8);
+    
+    //d.print_deque();
+}
 
+TEST(TestDeque, swap_2) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    d.push_back(11);
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    ASSERT_EQ(d[2], 11);
+    
+    my_deque<int> e;
+    e.push_back(6);
+    e.push_back(8);
+    
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e[0], 6);
+    ASSERT_EQ(e[1], 8);
+    
+    e.swap(d);
+    
+    ASSERT_EQ(e.size(), 3);
+    ASSERT_EQ(e[0], 7);
+    ASSERT_EQ(e[1], 9);
+    ASSERT_EQ(e[2], 11);
+    
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 6);
+    ASSERT_EQ(d[1], 8);
+    
+    //d.print_deque();
+}
+
+TEST(TestDeque, swap_3) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(1);
+    d.push_back(2);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 1);
+    ASSERT_EQ(d[1], 2);
+    
+    my_deque<int> e;
+    e.push_back(6);
+    e.push_back(8);
+    
+    ASSERT_EQ(e.size(), 2);
+    ASSERT_EQ(e[0], 6);
+    ASSERT_EQ(e[1], 8);
+    
+    e.swap(d);
+    
+    ASSERT_EQ(e[0], 1);
+    ASSERT_EQ(e[1], 2);
+    ASSERT_EQ(d[0], 6);
+    ASSERT_EQ(d[1], 8);
+    
+    //d.print_deque();
+}
+
+TEST(TestDeque, size_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+}
+
+TEST(TestDeque, size_2) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    d.pop_front();
+    ASSERT_EQ(d.size(), 1);
+}
+
+TEST(TestDeque, size_3) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 3);
+}
+
+TEST(TestDeque, resize_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    d.resize(5,4);
+    ASSERT_EQ(d.size(), 5);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    ASSERT_EQ(d[2], 4);
+    ASSERT_EQ(d[3], 4);
+    ASSERT_EQ(d[4], 4);
+    
+}
+
+TEST(TestDeque, resize_2) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    d.resize(15,4);
+    ASSERT_EQ(d.size(), 15);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    ASSERT_EQ(d[2], 4);
+    ASSERT_EQ(d[3], 4);
+    ASSERT_EQ(d[4], 4);
+    ASSERT_EQ(d[14], 4);
+    
+}
+
+TEST(TestDeque, resize_3) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    d.push_back(11);
+    d.push_back(13);
+    ASSERT_EQ(d.size(), 4);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    d.resize(2,4);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+}
+
+TEST(TestDeque, clear_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    d.clear();
+    ASSERT_EQ(d.size(), 0);
+    
+}
+
+TEST(TestDeque, clear_2) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    d.clear();
+    ASSERT_EQ(d.size(), 0);
+    d.push_back(5);
+    ASSERT_EQ(d.size(), 1);
+    ASSERT_EQ(d[0], 5);
+    
+}
+
+TEST(TestDeque, clear_3) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    d.clear();
+    ASSERT_EQ(d.size(), 0);
+    d.push_back(5);
+    ASSERT_EQ(d.size(), 1);
+    ASSERT_EQ(d[0], 5);
+    d.clear();
+    ASSERT_EQ(d.size(), 0);
+    
+}
+
+TEST(TestDeque, erase_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    d.erase(d.begin());
+    ASSERT_EQ(d.size(), 1);
+    ASSERT_EQ(d[0], 9);
+    
+}
+
+TEST(TestDeque, erase_2) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    d.push_back(11);
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    ASSERT_EQ(d[2], 11);
+    
+    d.erase(d.begin());
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 9);
+    ASSERT_EQ(d[1], 11);
+    
+}
+
+TEST(TestDeque, erase_3) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    d.push_back(11);
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    ASSERT_EQ(d[2], 11);
+    
+    d.erase(d.begin());
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 9);
+    ASSERT_EQ(d[1], 11);
+    
+    d.erase(d.begin());
+    ASSERT_EQ(d.size(), 1);
+    ASSERT_EQ(d[0], 11);
+    
+}
+
+TEST(TestDeque, insert_1) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    //d.print_deque();
+    d.insert(d.begin(), 77);
+    //d.print_deque();
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 77);
+    ASSERT_EQ(d[1], 7);
+    ASSERT_EQ(d[2], 9);
+    //d.print_deque();
+    
+}
+
+TEST(TestDeque, insert_2) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    d.push_back(10);
+    d.push_back(11);
+    d.push_back(12);
+    ASSERT_EQ(d.size(), 5);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    //d.print_deque();
+    d.insert(d.begin(), 77);
+    //d.print_deque();
+    ASSERT_EQ(d.size(), 6);
+    ASSERT_EQ(d[0], 77);
+    ASSERT_EQ(d[1], 7);
+    ASSERT_EQ(d[2], 9);
+    //d.print_deque();
+    
+}
+
+TEST(TestDeque, insert_3) {
+    using namespace std;
+    my_deque<int> d;
+    d.push_back(7);
+    d.push_back(9);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    
+    //d.print_deque();
+    d.insert(++d.begin(), 77);
+    //d.print_deque();
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 77);
+    ASSERT_EQ(d[2], 9);
+    //d.print_deque();
+    
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////
+//////      iterator tests
+////////////////////////////////////////////////////////////////////////////
 
 TEST(TestDeque, reference_write_1) {
     using namespace std;

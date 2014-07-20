@@ -70,6 +70,29 @@ BI uninitialized_copy (A& a, II b, II e, BI x) {
 }
 
 // ------------------
+// uninitialized_copy_backwards
+// ------------------
+
+template <typename A, typename II, typename BI>
+BI uninitialized_copy_backwards (A& a, II b, II e, BI x) {
+    using namespace std;
+    BI p = x;
+    try {
+        while (b != e) {
+            //cout << "uc:" << *b << " ";
+            a.construct(&*x, *b);
+            --b;
+            --x;
+        }
+        //cout << endl;
+    }
+    catch (...) {
+        destroy(a, p, x);
+        throw;}
+    return x;
+}
+
+// ------------------
 // uninitialized_fill
 // ------------------
 
@@ -580,14 +603,8 @@ class my_deque {
         // ------------
         // constructors
         // ------------
-
-        /**
-         * <your documentation>
-         */
-        explicit my_deque (const allocator_type& a = allocator_type()) :
-            _a(a) //do I need this?
-        {
-            // <your code>
+    
+        void reset() { //TODO: make private
             using namespace std;
             
             
@@ -610,6 +627,19 @@ class my_deque {
             (*pointers) = the_first_row;
             
             deque_root = pointers;
+        }
+    
+        /**
+         * <your documentation>
+         */
+        explicit my_deque (const allocator_type& a = allocator_type()) :
+            _a(a) //do I need this?
+        {
+            // <your code>
+            using namespace std;
+            
+            
+            reset();
             
             
             //cout << "HEWERREREE" << endl;
@@ -820,6 +850,9 @@ class my_deque {
          */
         void clear () {
             // <your code>
+            destroy(_a, begin(), end());
+            destroy(_ap, deque_root, deque_root + row_count);
+            reset();
             assert(valid());
         }
 
@@ -863,10 +896,16 @@ class my_deque {
         /**
          * <your documentation>
          */
-        iterator erase (iterator) {
+        iterator erase (iterator remove) {
             // <your code>
+            using namespace std;
+            //BI uninitialized_copy (A& a, II b, II e, BI x)
+            uninitialized_copy(_a, remove + 1, end(), remove);
+            
+            --deque_size;
+            --end_index;
             assert(valid());
-            return iterator();
+            return ++remove;
         }
 
         // -----
@@ -903,10 +942,20 @@ class my_deque {
         /**
          * <your documentation>
          */
-        iterator insert (iterator, const_reference) {
+        iterator insert (iterator spot, const_reference ins) {
             // <your code>
+            if((end_index % INITIAL_ROW_SIZE == 0) && (end_index / INITIAL_ROW_SIZE == row_count)) {
+                push_back(T());
+                --deque_size;
+                --end_index;
+                
+            }
+            uninitialized_copy_backwards(_a, --end(), spot - 1, end());
+            *spot = ins;
+            ++deque_size;
+            ++end_index;
             assert(valid());
-            return iterator();
+            return spot;
         }
 
         // ---
@@ -1015,6 +1064,16 @@ class my_deque {
          */
         void resize (size_type s, const_reference v = value_type()) {
             // <your code>
+            if(s > deque_size) { //expand deque
+                size_type diff = s - deque_size;
+                for(size_type i = 0; i < diff; ++i)
+                    push_back(v);
+            }
+            else { //contract deque
+                size_type diff = deque_size - s;
+                for(size_type i = 0; i < diff; ++i)
+                    pop_back();
+            }
             assert(valid());
         }
 
@@ -1037,8 +1096,17 @@ class my_deque {
         /**
          * <your documentation>
          */
-        void swap (my_deque&) {
+        void swap (my_deque& other) {
             // <your code>
+            
+            std::swap(_a, other._a);
+            std::swap(_ap, other._ap);
+            std::swap(deque_root, other.deque_root);
+            std::swap(row_count, other.row_count);
+            std::swap(deque_size, other.deque_size);
+            std::swap(begin_index, other.begin_index);
+            std::swap(end_index, other.end_index);
+
             assert(valid());
         }
 };
