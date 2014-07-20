@@ -665,12 +665,13 @@ class my_deque {
             
             for(size_type i = 0; i < rows_to_make; ++i) {
                 pointers[i] = _a.allocate(INITIAL_ROW_SIZE);
+                uninitialized_fill (_a, pointers[i], pointers[i] + INITIAL_ROW_SIZE, v);
             }
 
             row_count = rows_to_make;
-            deque_size = 0;
-            begin_index = INITIAL_ROW_SIZE / 2; //TODO: should this be somewhere different?
-            end_index = begin_index;
+            deque_size = s;
+            begin_index = 0; //TODO: should this be somewhere different?
+            end_index = s;
             
             
             deque_root = pointers;
