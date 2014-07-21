@@ -212,6 +212,19 @@ TYPED_TEST(TestDeque, push_back_6) {
     ASSERT_EQ(d[2], 2);
 }
 
+TYPED_TEST(TestDeque, push_back_7) {
+    
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    int NUM_OF_PUSH = 100;
+    for(int i = 0; i < NUM_OF_PUSH; ++i)
+        d.push_back(i);
+    
+    for(int i = 0; i < NUM_OF_PUSH; ++i)
+        ASSERT_EQ(d[i], i);
+}
+
 TYPED_TEST(TestDeque, push_front_1) {
     ALL_OF_IT
     using namespace std;
@@ -225,27 +238,12 @@ TYPED_TEST(TestDeque, push_front_2) {
     using namespace std;
     deque_type d;
     //d.print_deque();
-    for(int i = 17; i > 0; --i)
+    int NUM_OF_PUSH = 100;
+    for(int i = NUM_OF_PUSH; i >= 0; --i)
         d.push_front(i);
 
-    //d.print_deque();
-    ASSERT_EQ(d[0], 1);
-    ASSERT_EQ(d[1], 2);
-    ASSERT_EQ(d[2], 3);
-    ASSERT_EQ(d[3], 4);
-    ASSERT_EQ(d[4], 5);
-    ASSERT_EQ(d[5], 6);
-    ASSERT_EQ(d[6], 7);
-    ASSERT_EQ(d[7], 8);
-    ASSERT_EQ(d[8], 9);
-    ASSERT_EQ(d[9], 10);
-    ASSERT_EQ(d[10], 11);
-    ASSERT_EQ(d[11], 12);
-    ASSERT_EQ(d[12], 13);
-    ASSERT_EQ(d[13], 14);
-    ASSERT_EQ(d[14], 15);
-    ASSERT_EQ(d[15], 16);
-    ASSERT_EQ(d[16], 17);
+    for(int i = 0; i <= NUM_OF_PUSH; ++i)
+        ASSERT_EQ(d[i], i);
     
     
 }

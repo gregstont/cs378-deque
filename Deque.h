@@ -31,7 +31,9 @@ using std::rel_ops::operator>=;
 // defines
 // -------
 
-#define INITIAL_ROW_SIZE 10
+#define DIV_ROW_SHIFT       4
+#define INITIAL_ROW_SIZE    16  // THIS VALUE MUST BE == 2^DIV_ROW_SHIFT
+#define MOD_ROW_MASK        15  // THIS VALUE MUST BE == INITIAL_ROW_SIZE - 1
 
 
 // -------
@@ -309,7 +311,7 @@ class my_deque {
                     //static value_type dummy;
                     //return dummy;
                     
-                    return owner->deque_root[index / INITIAL_ROW_SIZE][index % INITIAL_ROW_SIZE];
+                    return owner->deque_root[index >> DIV_ROW_SHIFT][index & MOD_ROW_MASK];
                 }
 
                 // -----------
@@ -508,7 +510,7 @@ class my_deque {
                     // dummy is just to be able to compile the skeleton, remove it
                     //using namespace std;
                     //cout << "* index:" << index << endl;
-                    return owner->deque_root[index / INITIAL_ROW_SIZE][index % INITIAL_ROW_SIZE];
+                    return owner->deque_root[index >> DIV_ROW_SHIFT][index & MOD_ROW_MASK];
                 }
 
                 // -----------
@@ -634,7 +636,7 @@ class my_deque {
             
             row_count = 1;
             deque_size = 0;
-            begin_index = INITIAL_ROW_SIZE / 2;
+            begin_index = INITIAL_ROW_SIZE >> 1;
             end_index = begin_index;
             
             (*pointers) = the_first_row;
@@ -670,7 +672,7 @@ class my_deque {
             
             using namespace std;
             
-            size_type rows_to_make = (s + 9) / INITIAL_ROW_SIZE;
+            size_type rows_to_make = (s + INITIAL_ROW_SIZE - 1) / INITIAL_ROW_SIZE;
             T** pointers = _ap.allocate(rows_to_make);
             
             T* temp_p;
@@ -705,7 +707,7 @@ class my_deque {
             //BI uninitialized_copy (A& a, II b, II e, BI x) {
             
             
-            size_type rows_to_make = (that.deque_size + 9) / INITIAL_ROW_SIZE;
+            size_type rows_to_make = (that.deque_size + INITIAL_ROW_SIZE - 1) / INITIAL_ROW_SIZE;
             //cout << "rows to make " << rows_to_make << endl;
             T** pointers = _ap.allocate(rows_to_make);
             
@@ -777,7 +779,7 @@ class my_deque {
             // dummy is just to be able to compile the skeleton, remove it
             
             size_type temp = index + begin_index;
-            return deque_root[temp / INITIAL_ROW_SIZE][temp % INITIAL_ROW_SIZE];
+            return deque_root[temp >> DIV_ROW_SHIFT][temp & MOD_ROW_MASK];
             //static value_type dummy;
             //return dummy;
         }
@@ -804,7 +806,7 @@ class my_deque {
             if(index >= deque_size)
                 throw std::out_of_range("at index out of range");
             size_type temp = index + begin_index;
-            return deque_root[temp / INITIAL_ROW_SIZE][temp % INITIAL_ROW_SIZE];
+            return deque_root[temp >> DIV_ROW_SHIFT][temp & MOD_ROW_MASK];
         }
 
         /**
@@ -825,7 +827,7 @@ class my_deque {
             // <your code>
             // dummy is just to be able to compile the skeleton, remove it
             
-            return deque_root[(end_index - 1) / INITIAL_ROW_SIZE][(end_index - 1) % INITIAL_ROW_SIZE];
+            return deque_root[(end_index - 1) >> DIV_ROW_SHIFT][(end_index - 1) & MOD_ROW_MASK];
             
             //static value_type dummy;
             //return dummy;
@@ -918,6 +920,7 @@ class my_deque {
             // <your code>
             using namespace std;
             //BI uninitialized_copy (A& a, II b, II e, BI x)
+            //_a.destroy(&*remove);
             uninitialized_copy(_a, remove + 1, end(), remove);
             
             --deque_size;
@@ -942,7 +945,7 @@ class my_deque {
             //size_type temp = index + begin_index;
             //using namespace  std;
             //cout << "in const front" << endl;
-            return deque_root[begin_index / INITIAL_ROW_SIZE][begin_index % INITIAL_ROW_SIZE];
+            return deque_root[begin_index >> DIV_ROW_SHIFT][begin_index & MOD_ROW_MASK];
             
             //return (*this)[begin_index];
         }
@@ -962,7 +965,7 @@ class my_deque {
          */
         iterator insert (iterator spot, const_reference ins) {
             // <your code>
-            if((end_index % INITIAL_ROW_SIZE == 0) && (end_index / INITIAL_ROW_SIZE == row_count)) {
+            if(((end_index & MOD_ROW_MASK) == 0) && (end_index >> DIV_ROW_SHIFT == row_count)) {
                 push_back(T());
                 --deque_size;
                 --end_index;
@@ -1015,7 +1018,7 @@ class my_deque {
             // <your code>
             using namespace std;
             //cout << "push_back:" << val << endl;
-            if((end_index % INITIAL_ROW_SIZE == 0) && (end_index / INITIAL_ROW_SIZE == row_count)) { //row full
+            if(((end_index & MOD_ROW_MASK) == 0) && (end_index >> DIV_ROW_SHIFT == row_count)) { //row full
                 //cout << "adding row" << endl;
                 //add new row pointer
                 T** new_pointers = _ap.allocate(row_count + 1); //BI uninitialized_copy (A& a, II b, II e, BI x) {
@@ -1034,7 +1037,7 @@ class my_deque {
                 
             }
             //else { //no need for else?
-            _a.construct(&deque_root[end_index / INITIAL_ROW_SIZE][end_index % INITIAL_ROW_SIZE], val);
+            _a.construct(&deque_root[end_index >> DIV_ROW_SHIFT][end_index & MOD_ROW_MASK], val);
             ++end_index;
             ++deque_size;
             
@@ -1068,7 +1071,7 @@ class my_deque {
             }
             
             --begin_index;
-            _a.construct(&deque_root[begin_index / INITIAL_ROW_SIZE][begin_index % INITIAL_ROW_SIZE], val);
+            _a.construct(&deque_root[begin_index >> DIV_ROW_SHIFT][begin_index & MOD_ROW_MASK], val);
             ++deque_size;
             assert(valid());
         }
