@@ -119,17 +119,13 @@ TYPED_TEST_CASE(TestDeque, my_types);
 TEST(TestDeque, push_back_7) {
     
     //ALL_OF_IT
-    //using namespace std;
-    my_deque<int> d;
-    int NUM_OF_PUSH = 9;
-    for(int i = 0; i < NUM_OF_PUSH; ++i)
-        d.push_back(i);
-    
-    //d.print_deque();
-    
-    for(int i = 0; i < NUM_OF_PUSH; ++i)
-        ASSERT_EQ(d[i], i);
-}*/
+    using namespace std;
+    vector<int> vi;
+    vi.push_back(9);
+    my_deque< vector<int> > d;
+    //d.push_back(vi);
+}
+ */
 
  TYPED_TEST(TestDeque, Empty) {
     using namespace std;
