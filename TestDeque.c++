@@ -115,9 +115,23 @@ TYPED_TEST_CASE(TestDeque, my_types);
     //ASSERT_EQ(e[0], 8);
     //d.print_deque();
 }*/
+/*
+TEST(TestDeque, push_back_7) {
+    
+    //ALL_OF_IT
+    //using namespace std;
+    my_deque<int> d;
+    int NUM_OF_PUSH = 9;
+    for(int i = 0; i < NUM_OF_PUSH; ++i)
+        d.push_back(i);
+    
+    //d.print_deque();
+    
+    for(int i = 0; i < NUM_OF_PUSH; ++i)
+        ASSERT_EQ(d[i], i);
+}*/
 
-
-TYPED_TEST(TestDeque, Empty) {
+ TYPED_TEST(TestDeque, Empty) {
     using namespace std;
     ALL_OF_IT
     
@@ -176,6 +190,7 @@ TYPED_TEST(TestDeque, push_back_3) {
     ASSERT_EQ(d[0], 789);
 }
 
+
 TYPED_TEST(TestDeque, push_back_4) {
     
     ALL_OF_IT
@@ -186,6 +201,7 @@ TYPED_TEST(TestDeque, push_back_4) {
     ASSERT_EQ(d[0], 7);
     ASSERT_EQ(d[1], 8);
 }
+
 
 TYPED_TEST(TestDeque, push_back_5) {
     
@@ -200,6 +216,7 @@ TYPED_TEST(TestDeque, push_back_5) {
     d.push_back(4);
     ASSERT_EQ(d[1], 4);
 }
+
 
 TYPED_TEST(TestDeque, push_back_6) {
     

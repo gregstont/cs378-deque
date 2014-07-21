@@ -879,8 +879,14 @@ class my_deque {
          */
         void clear () {
             // <your code>
-            destroy(_a, begin(), end());
-            destroy(_ap, deque_root, deque_root + row_count);
+            
+            for(size_t i = 0; i < row_count; ++i) {
+                destroy(_a, deque_root[i], deque_root[i] + INITIAL_ROW_SIZE);
+                _a.deallocate(deque_root[i], INITIAL_ROW_SIZE);
+            }
+        
+            destroy(_ap, deque_root, deque_root + row_count + 1);
+            _ap.deallocate(deque_root, row_count);
             reset();
             assert(valid());
         }
@@ -1034,7 +1040,8 @@ class my_deque {
                 uninitialized_copy (_ap, deque_root, deque_root + row_count, new_pointers);
                 
                 //destroy old pointers
-                destroy(_ap, deque_root, deque_root + row_count);
+                destroy(_ap, deque_root, deque_root + row_count + 1);
+                _ap.deallocate(deque_root, row_count);
                 
                 //point to new
                 deque_root = new_pointers;
@@ -1067,7 +1074,8 @@ class my_deque {
                 uninitialized_copy (_ap, deque_root, deque_root + row_count, new_pointers + 1);
                 
                 //destroy old pointers
-                destroy(_ap, deque_root, deque_root + row_count);
+                destroy(_ap, deque_root, deque_root + row_count + 1);
+                _ap.deallocate(deque_root, row_count);
                 
                 //point to new
                 deque_root = new_pointers;
