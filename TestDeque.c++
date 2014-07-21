@@ -118,8 +118,11 @@ TYPED_TEST_CASE(TestDeque, my_types);
 
 
 TYPED_TEST(TestDeque, Empty) {
+    using namespace std;
     ALL_OF_IT
+    
     deque_type x;
+    
     const bool b = x.empty();
     ASSERT_TRUE(b);}
 
@@ -129,6 +132,8 @@ TYPED_TEST(TestDeque, Size) {
     const size_type s = x.size();
     ASSERT_EQ(0, s);}
 
+
+ 
 TYPED_TEST(TestDeque, push_back_1) {
 
     ALL_OF_IT
@@ -2832,6 +2837,8 @@ TYPED_TEST(TestDeque, const_it_cons_3) {
     ASSERT_EQ(*(e.begin()), 7);
     ASSERT_EQ(*(e.end() -= 1), 1);
 }
+ 
+
 
 /*
  WEIRD BUG -  not a const thing

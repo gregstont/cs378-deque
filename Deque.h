@@ -42,8 +42,10 @@ using std::rel_ops::operator>=;
 
 template <typename A, typename BI>
 BI destroy (A& a, BI b, BI e) {
+    using namespace std;
     while (b != e) {
         --e;
+        //cout << "destroy:" << endl;
         a.destroy(&*e);}
     return b;
 }
@@ -745,11 +747,18 @@ class my_deque {
          */
         ~my_deque () {
             // <your code>
-            //using namespace std;
+            using namespace std;
             //cout << "IN DESTRUCT" << endl;
             //destroy (A& a, BI b, BI e)
-            destroy(_a, begin(), end());
+            //clear();
+            
+            for(size_t i = 0; i < row_count; ++i) {
+                destroy(_a, deque_root[i], deque_root[i] + INITIAL_ROW_SIZE);
+                _a.deallocate(deque_root[i], INITIAL_ROW_SIZE);
+            }
+            //cout << "IN DESTRUCT2" << endl;
             destroy(_ap, deque_root, deque_root + row_count);
+            _ap.deallocate(deque_root, row_count);
             assert(valid());
         }
 
