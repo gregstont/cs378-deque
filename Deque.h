@@ -308,7 +308,7 @@ public:
         // -----
         
         bool valid () const {
-            return true;//return (index <= owner->end_index) && (owner != NULL);
+            return (index <= owner->end_index + 1) && (owner != NULL);
         }
         
     public:
@@ -973,30 +973,23 @@ public:
         using namespace std;
         if(!deque_root)
             allocate_rows(INITIAL_ROW_SIZE);
-        if(spot == begin()) { ///THIS IS NEW ///THIS IS NEW ///THIS IS NEW ///THIS IS NEW
+        if(spot == begin()) {
             push_front(ins);
             return spot;
         }
         if(((end_index & MOD_ROW_MASK) == 0) && (end_index >> DIV_ROW_SHIFT == row_count)) {
-            //cout << "in heerr" << endl;
             //push empty T to allocate a new row
             push_back(T());
-            _a.destroy(&*(--end())); ///THIS IS NEW ///THIS IS NEW ///THIS IS NEW
             --deque_size;
             --end_index;
             
         }
-        //_a.destroy(&*spot);
-        //cout << "end" << *(--end()) << endl;
-        //print_deque();
-        _a.construct(&*end(), T());
+        else
+            _a.construct(&*end(), T());
+
         copy_backward(spot , end(), ++end());
-        //cout << "end" << *(--end()) << endl;
-        //print_deque();
-        //uninitialized_copy_backwards(_a, --end(), spot - 1, end());
         
         *spot = ins;
-        //print_deque();
         ++deque_size;
         ++end_index;
         assert(valid());
