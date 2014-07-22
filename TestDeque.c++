@@ -88,230 +88,23 @@ typedef testing::Types<
 
 TYPED_TEST_CASE(TestDeque, my_types);
 
-/*TEST(TestDeque, const_star_1) {
-    //ALL_OF_IT
-    using namespace std;
-    my_deque<int> d(10,3);
-    int tt = 7;
-    //d.push_front(tt);
-    d.pop_front();
-    d.pop_front();
-    d.push_front(7);
-    //d.push_back(9);
-    d.pop_back();
-    d.pop_back();
-    d.pop_back();
-    //d.push_back(9);
-    //cout << "bacl" << *--d.end() << endl;
-    //d.push_front(6);
-    //my_deque<int>::iterator ttt = d.begin();
-    // *d.begin() = 8;
-    //d.print_deque();
-    
-    my_deque<int> e(d);
-    
-    
-    //ASSERT_EQ(e.size(), 46);
-    //ASSERT_EQ(e[0], 8);
-    //d.print_deque();
-}*/
 
-/*
-TEST(TestDeque, push_back_7) {
-    
-    //ALL_OF_IT
-    using namespace std;
-    vector<string> vi;
-    vi.push_back("sdfsdfsdfsdfdsfasf");
-    my_deque< vector<string> > d;
-    d.push_back(vi);
-}
-
-TEST(TestDeque, push_back_7) {
-    
-    //ALL_OF_IT
-    using namespace std;
-    vector<int> vi;
-    vi.push_back(1);
-    my_deque< vector<int> > d;
-    d.push_back(vi);
-}
-
-TEST(TestDeque, push_back_7) {
-    
-    //ALL_OF_IT
-    using namespace std;
-    //vector<string> vi;
-    //vi.push_back("Sdfsdf");
-    my_deque< string > d;
-    cout << "deque made" << endl;
-    d.push_back("Sdf");
-    cout << "pushed" << endl;
-}
- 
-
-TEST(TestDeque, erase_1) {
-    //ALL_OF_IT
-    using namespace std;
-    my_deque<string> d;
-    d.push_back("7");
-    d.push_back("9");
-    ASSERT_EQ(d.size(), 2);
-    ASSERT_EQ(d[0], "7");
-    ASSERT_EQ(d[1], "9");
-    
-    d.erase(d.begin());
-    ASSERT_EQ(d.size(), 1);
-    ASSERT_EQ(d[0], "9");
-    
-}
-
-TEST(TestDeque, erase_1) {
-    //ALL_OF_IT
-    using namespace std;
-    my_deque<string> d;
-    d.push_back("7");
-    d.push_back("9");
-    ASSERT_EQ(d.size(), 2);
-    ASSERT_EQ(d[0], "7");
-    ASSERT_EQ(d[1], "9");
-    
-    d.pop_back();
-    ASSERT_EQ(d.size(), 1);
-    ASSERT_EQ(d[0], "7");
-    
-}
- 
- 
-
-TEST(TestDeque, assignment_1) {
-    //ALL_OF_IT
-    using namespace std;
-    my_deque<int> e;
-    e.push_back(9);
-    {
-        my_deque<int> d;
-        d.push_back(7);
-        d.push_back(9);
-        ASSERT_EQ(d.size(), 2);
-        ASSERT_EQ(d[0], 7);
-        ASSERT_EQ(d[1], 9);
-        
-        e = (const my_deque<int>)d;
-        d.push_back(6);
-        
-    }
-    //e.push_back(10);
-    
-    //ASSERT_EQ(e.size(), 3);
-    //ASSERT_EQ(e[0], 7);
-    //ASSERT_EQ(e[1], 9);
-    //ASSERT_EQ(e[2], 10);
-    
-    //d.print_deque();
-}
-
-
-TEST(TestDeque, clear_1) {
-    //ALL_OF_IT
-    using namespace std;
-    my_deque<int> d;
-    d.push_back(7);
-    d.push_back(9);
-    ASSERT_EQ(d.size(), 2);
-    ASSERT_EQ(d[0], 7);
-    ASSERT_EQ(d[1], 9);
-    
-    d.clear();
-    ASSERT_EQ(d.size(), 0);
-    d.push_back(2);
-    ASSERT_EQ(d.size(), 1);
-    //ASSERT_EQ(d[0], 2);
-    
-}
-TEST(TestDeque, assignment_1) {
-    //ALL_OF_IT
-    using namespace std;
-    my_deque<int> e;
-    e.push_back(9);
-    e.push_back(9);
-    e.push_back(9);
-    e.push_back(9);
-    {
-        my_deque<int> d;
-        d.push_back(7);
-        d.push_back(9);
-        ASSERT_EQ(d.size(), 2);
-        ASSERT_EQ(d[0], 7);
-        ASSERT_EQ(d[1], 9);
-        cout << "assign" << endl;
-        e = (const my_deque<int>)d;
-        //d.push_back("6");
-        
-    }
-    e.push_back(5);
-    cout << "testdone" << endl << endl;
-    //e.push_back(10);
-    
-    //ASSERT_EQ(e.size(), 3);
-    //ASSERT_EQ(e[0], 7);
-    //ASSERT_EQ(e[1], 9);
-    //ASSERT_EQ(e[2], 10);
-    
-    //d.print_deque();
-}
-
-TEST(TestDeque, assignment_1) {
-    //ALL_OF_IT
-    using namespace std;
-    my_deque<string> e;
-    e.push_back("9");
-    e.push_back("9");
-    e.push_back("9");
-    e.push_back("9");
-    {
-        my_deque<string> d;
-        d.push_back("7");
-        d.push_back("9");
-        ASSERT_EQ(d.size(), 2);
-        ASSERT_EQ(d[0], "7");
-        ASSERT_EQ(d[1], "9");
-        
-        //cout << "assign-before" << endl;
-        e = d;
-        //cout << "assign-after" << endl << endl;
-        //d.push_back("6");
-        
-    }
-    e.push_back("10");
-    //cout << "testdone" << endl << endl;
-    
-    //ASSERT_EQ(e.size(), 3);
-    //ASSERT_EQ(e[0], 7);
-    //ASSERT_EQ(e[1], 9);
-    //ASSERT_EQ(e[2], 10);
-    
-    //d.print_deque();
-}
-*/
-
-
-
-
- TYPED_TEST(TestDeque, Empty) {
+TYPED_TEST(TestDeque, Empty) {
     using namespace std;
     ALL_OF_IT
     
     deque_type x;
     
     const bool b = x.empty();
-    ASSERT_TRUE(b);}
+    ASSERT_TRUE(b);
+}
 
 TYPED_TEST(TestDeque, Size) {
     ALL_OF_IT
     deque_type x;
     const size_type s = x.size();
-    ASSERT_EQ(0, s);}
+    ASSERT_EQ(0, s);
+}
 
 
  

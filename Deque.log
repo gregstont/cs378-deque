@@ -1,0 +1,149 @@
+commit a389aedb97ab160a47fe373e8cdbb9c2f3fffc1f
+Author: gregstont <gregstont@gmail.com>
+Date:   Tue Jul 22 00:08:44 2014 -0500
+
+    added TestDeque.out
+
+commit 77a593c2d11eaea10011c090e130b848980c17a1
+Author: gregstont <gregstont@gmail.com>
+Date:   Tue Jul 22 00:00:48 2014 -0500
+
+    closes #9; doxygen files added
+
+commit b8cf2b8df359fa5a075b98a942d0251a5bb721eb
+Author: gregstont <gregstont@gmail.com>
+Date:   Mon Jul 21 23:52:41 2014 -0500
+
+    cleaning
+
+commit 91d66223e277b981b057dcb126415520d4a4c9d1
+Author: gregstont <gregstont@gmail.com>
+Date:   Mon Jul 21 23:37:07 2014 -0500
+
+    closes #7; assertions, comments, cleaning
+
+commit 612a1bbf619c9687cb1ed3f9303850402bdea8eb
+Author: gregstont <gregstont@gmail.com>
+Date:   Mon Jul 21 23:00:20 2014 -0500
+
+    added comments
+
+commit 26ebd19e6331b41099cf741c1035f45212fc4a0c
+Author: gregstont <gregstont@gmail.com>
+Date:   Mon Jul 21 21:44:35 2014 -0500
+
+    cleaned up
+
+commit 793e2a3fc264c880ae64b90728cf42c625662b83
+Author: gregstont <gregstont@gmail.com>
+Date:   Mon Jul 21 21:36:42 2014 -0500
+
+    fixed assignment op
+
+commit 490356c5beb64443843ecdbaf48d31fe88074d8a
+Author: gregstont <gregstont@gmail.com>
+Date:   Mon Jul 21 21:06:54 2014 -0500
+
+    closes #23; fixed assignment op and mem leaks
+
+commit 2269f97eeffb188894e354bcc02d92728c860745
+Author: gregstont <gregstont@gmail.com>
+Date:   Mon Jul 21 19:29:20 2014 -0500
+
+    closes #22; fixed more memory leaks
+
+commit 4754030d09d096a7aacea29221f102cf78d2aeb3
+Author: gregstont <gregstont@gmail.com>
+Date:   Mon Jul 21 00:19:43 2014 -0500
+
+    removed destroys before deallocate
+
+commit 9ad212d2bd44f9d6036e5ccf0b696b78083222c8
+Author: gregstont <gregstont@gmail.com>
+Date:   Mon Jul 21 00:06:16 2014 -0500
+
+    closes #18; no more known memory leaks!
+
+commit 0ffb0185038228ea8bd5170e87ecc8789d853be3
+Author: gregstont <gregstont@gmail.com>
+Date:   Sun Jul 20 23:51:25 2014 -0500
+
+    fixed a few memory leaks
+
+commit d4addf0165a8a15b9d7583406bd8626566ee791a
+Author: gregstont <gregstont@gmail.com>
+Date:   Sun Jul 20 23:20:33 2014 -0500
+
+    closes #20; now uses shifts and masks for indexing
+
+commit 72f708b2f038f0016c6491c0a59cb829d4365e26
+Author: gregstont <gregstont@gmail.com>
+Date:   Sun Jul 20 17:45:44 2014 -0500
+
+    closes #19; fixed memory bug
+
+commit e137fb6ff2da733de972eec7e24cf31e08e62379
+Author: gregstont <gregstont@gmail.com>
+Date:   Sun Jul 20 15:38:47 2014 -0500
+
+    closes #6; all unit tests added
+
+commit af08d20273ba705ad1bcf519855a8f600daab549
+Author: gregstont <gregstont@gmail.com>
+Date:   Sun Jul 20 13:46:07 2014 -0500
+
+    closes #16; tests updated to match given tests
+
+commit 66fe035073cfd2f596c831c4dd3afafba08f83ac
+Author: gregstont <gregstont@gmail.com>
+Date:   Sun Jul 20 12:47:17 2014 -0500
+
+    closes #17; added equals and compare
+
+commit 6d155d18242c2d5d6e2de48b2614c8801bad5ae1
+Author: gregstont <gregstont@gmail.com>
+Date:   Sun Jul 20 01:47:37 2014 -0500
+
+    closes #15; added erase and insert
+
+commit 52b73bd5cd0e98df3d63436108d818162e2f2834
+Author: gregstont <gregstont@gmail.com>
+Date:   Sun Jul 20 00:34:19 2014 -0500
+
+    closes #14; const iterator fixed, more tests aded
+
+commit dcf703bb879ded39e277a787b303000c9ba0cf3e
+Author: gregstont <gregstont@gmail.com>
+Date:   Sat Jul 19 22:19:02 2014 -0500
+
+    closes #13; iterator done except for valid
+
+commit 6f76a1171bab93881b469e51132004c133a74f28
+Author: gregstont <gregstont@gmail.com>
+Date:   Sat Jul 19 21:56:09 2014 -0500
+
+    closes #12; pop and front added, last commit before iterator work
+
+commit f264773936375060ec1a55850353251f4d0396e9
+Author: gregstont <gregstont@gmail.com>
+Date:   Sat Jul 19 20:06:24 2014 -0500
+
+    basic pushing and popping working
+
+commit 99ee7ed8760f1c7f9ef10fe449f02ce2c4545976
+Author: gregstont <gregstont@gmail.com>
+Date:   Sat Jul 19 17:01:29 2014 -0500
+
+    removed extra files
+
+commit d1dab52ba8daa9f6dca3c529ed34f34aa9905098
+Author: gregstont <gregstont@gmail.com>
+Date:   Sat Jul 19 17:00:19 2014 -0500
+
+    closes #5; added makefile
+
+commit 73678bc38c6a7e629a6be71fd44e814c17c92a8b
+Author: gregstont <gregstont@gmail.com>
+Date:   Sat Jul 19 16:44:43 2014 -0500
+
+    initial commit
