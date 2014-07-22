@@ -89,7 +89,8 @@ typedef testing::Types<
 TYPED_TEST_CASE(TestDeque, my_types);
 
 /*
-TEST(TestDeque, insert_4) {
+
+TEST(TestDeque, insert_7) {
     //ALL_OF_IT
     using namespace std;
     my_deque<string> d(5,"3");
@@ -103,7 +104,7 @@ TEST(TestDeque, insert_4) {
     //ASSERT_EQ(d.size(), 17);
     
 }
-TEST(TestDeque, insert_4) {
+TEST(TestDeque, insert_9) {
 //ALL_OF_IT
 using namespace std;
 my_deque<int> d;
@@ -122,7 +123,7 @@ ASSERT_EQ(d[1], 77);
 ASSERT_EQ(d[2], 9);
     //d.print_deque();
 }
-TEST(TestDeque, erase_1) {
+TEST(TestDeque, erase_11) {
     //ALL_OF_IT
     using namespace std;
     my_deque<string> d;

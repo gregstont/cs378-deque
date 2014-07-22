@@ -34,7 +34,7 @@ using std::rel_ops::operator>=;
 
 /**
  * This deque will use rows of size INITIAL_ROW_SIZE.
- * That value must be a power of 2 in the implementation because
+ * That value must be a power of 2 in this implementation because
  * it allows us to replace the expensive divide and mod with 
  * bit shifts and masking.
  * The following constraints must be adhered to!
@@ -71,28 +71,6 @@ BI uninitialized_copy (A& a, II b, II e, BI x) {
             a.construct(&*x, *b);
             ++b;
             ++x;
-        }
-    }
-    catch (...) {
-        destroy(a, p, x);
-        throw;}
-    return x;
-}
-
-// ------------------
-// uninitialized_copy_backwards
-// ------------------
-
-template <typename A, typename II, typename BI>
-BI uninitialized_copy_backwards (A& a, II b, II e, BI x) {
-    using namespace std;
-    BI p = x;
-    try {
-        while (b != e) {
-            //a.destroy(&*(x));
-            a.construct(&*x, *b);
-            --b;
-            --x;
         }
     }
     catch (...) {
@@ -948,8 +926,6 @@ public:
      * @return an iterator pointing past the value erased
      */
     iterator erase (iterator remove) {
-        //_a.destroy(&*remove);
-        //uninitialized_copy(_a, remove + 1, end(), remove);
         std::copy(remove + 1, end(), remove);
         _a.destroy(&*(--end()));
         
