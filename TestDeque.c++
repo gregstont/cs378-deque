@@ -1635,6 +1635,7 @@ TYPED_TEST(TestDeque, clear_1) {
     ASSERT_EQ(d[1], 9);
     
     d.clear();
+    d.clear();
     ASSERT_EQ(d.size(), 0);
     
 }
@@ -2846,9 +2847,9 @@ TYPED_TEST(TestDeque, const_dec_post_1) {
     
     ASSERT_EQ(e.size(), 2);
     ASSERT_EQ(e[0], 7);
-    
-    ASSERT_EQ(*(e.begin()--), 7);
-    //d.print_deque();
+    ASSERT_EQ(e[1], 3);
+    e.end()--;
+    ASSERT_EQ(*(++e.begin()), 3);
 }
 TYPED_TEST(TestDeque, const_dec_post_2) {
     ALL_OF_IT
@@ -2864,9 +2865,7 @@ TYPED_TEST(TestDeque, const_dec_post_2) {
     ASSERT_EQ(e[0], 7);
     
     ASSERT_EQ(*(e.begin()), 7);
-    //ASSERT_EQ(*(d.end()--), 7);
     ASSERT_EQ(*((--e.end())--), 2);
-    //d.print_deque();
 }
 TYPED_TEST(TestDeque, const_dec_post_3) {
     ALL_OF_IT
@@ -2882,9 +2881,7 @@ TYPED_TEST(TestDeque, const_dec_post_3) {
     ASSERT_EQ(e[0], 7);
     
     ASSERT_EQ(*(e.begin()), 7);
-    ASSERT_EQ(*(e.begin()--), 7);
     ASSERT_EQ(*((--e.end())--), 1);
-    //d.print_deque();
 }
 
 
@@ -2902,7 +2899,6 @@ TYPED_TEST(TestDeque, const_plus_eq_1) {
     ASSERT_EQ(e[0], 7);
     
     ASSERT_EQ(*(e.begin() += 1), 3);
-    //d.print_deque();
 }
 TYPED_TEST(TestDeque, const_plus_eq_2) {
     ALL_OF_IT
@@ -2920,7 +2916,6 @@ TYPED_TEST(TestDeque, const_plus_eq_2) {
     ASSERT_EQ(*(e.begin()), 7);
     ASSERT_EQ(*(e.begin() += 1), 3);
     ASSERT_EQ(*(e.begin() += 2), 2);
-    //d.print_deque();
 }
 TYPED_TEST(TestDeque, const_plus_eq_3) {
     ALL_OF_IT

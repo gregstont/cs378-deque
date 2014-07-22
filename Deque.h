@@ -185,8 +185,7 @@ private:
     // -----
     
     bool valid () const {
-        // <your code>
-        return true;
+        return (begin_index <= end_index) && (deque_size >= 0) && (row_count >= 0);
     }
     
     /**
@@ -313,8 +312,7 @@ public:
         // -----
         
         bool valid () const {
-            // <your code>
-            return true;
+            return (index <= owner->end_index) && (owner != NULL);
         }
         
     public:
@@ -426,7 +424,6 @@ public:
          * @returns iterator with its NEW value
          */
         iterator& operator += (difference_type d) {
-            // <your code>
             index += d;
             assert(valid());
             return *this;
@@ -442,7 +439,6 @@ public:
          * @returns iterator with its NEW value
          */
         iterator& operator -= (difference_type d) {
-            // <your code>
             index -= d;
             assert(valid());
             return *this;
@@ -478,7 +474,6 @@ public:
          * @return  true if the lhs and rhs point to the same value
          */
         friend bool operator == (const const_iterator& lhs, const const_iterator& rhs) {
-            // <your code>
             return (lhs.owner == rhs.owner) && (lhs.index == rhs.index);
         }
         
@@ -525,24 +520,24 @@ public:
         // data
         // ----
         
-        // <your data>
         const my_deque *owner;
         size_t index;
         
     private:
+        
         // -----
         // valid
         // -----
         
         bool valid () const {
-            // <your code>
-            return true;
+            return (index <= owner->end_index) && (owner != NULL);
         }
         
         
         
         
     public:
+        
         // -----------
         // constructor
         // -----------
@@ -554,7 +549,6 @@ public:
          * @return  the iterator
          */
         const_iterator (const my_deque *owner_, const size_t index_) {
-            // <your code>
             owner = owner_;
             index = (size_t)index_;
         }
@@ -596,7 +590,6 @@ public:
          * @returns iterator with its NEW value
          */
         const_iterator& operator ++ () {
-            // <your code>
             ++index;
             assert(valid());
             return *this;
@@ -648,7 +641,6 @@ public:
          * @returns iterator with its NEW value
          */
         const_iterator& operator += (difference_type d) {
-            // <your code>
             index += d;
             assert(valid());
             return *this;
@@ -664,7 +656,6 @@ public:
          * @returns iterator with its NEW value
          */
         const_iterator& operator -= (difference_type d) {
-            // <your code>
             index -= d;
             assert(valid());
             return *this;
@@ -677,9 +668,6 @@ public:
     // constructors
     // ------------
     
-    
-    
-    
     /**
      * create a new deque of no given size.
      * This deck is a two-dimensional structure that will not invalidate old references on reallocations
@@ -691,7 +679,7 @@ public:
     {
         allocate_rows(INITIAL_ROW_SIZE);
         deque_size = 0;
-        begin_index = INITIAL_ROW_SIZE >> 1;
+        begin_index = INITIAL_ROW_SIZE >> 1; //start at the middle
         end_index = begin_index;
         assert(valid());
     }
@@ -706,26 +694,12 @@ public:
     explicit my_deque (size_type s, const_reference v = value_type(), const allocator_type& a = allocator_type()) :
     _a(a)
     {
-        using namespace std;
-        
-        size_type rows_to_make = (s + INITIAL_ROW_SIZE - 1) / INITIAL_ROW_SIZE;
-        T** pointers = _ap.allocate(rows_to_make);
-        
-        T* temp_p;
-        uninitialized_fill (_ap, pointers, pointers + rows_to_make, temp_p );
-        
-        for(size_type i = 0; i < rows_to_make; ++i) {
-            pointers[i] = _a.allocate(INITIAL_ROW_SIZE);
-            uninitialized_fill (_a, pointers[i], pointers[i] + INITIAL_ROW_SIZE, v);
-        }
-        
-        row_count = rows_to_make;
+        allocate_rows(s);
         deque_size = s;
         begin_index = 0; //TODO: should this be somewhere different?
         end_index = s;
         
-        
-        deque_root = pointers;
+        uninitialized_fill (_a, begin(), end(), v);
         
         assert(valid());
     }
@@ -738,8 +712,6 @@ public:
     my_deque (const my_deque& that) :
     _a(that._a)
     {
-        using namespace std;
-        
         allocate_rows(that.deque_size);
         
         deque_size = that.deque_size;
@@ -758,12 +730,9 @@ public:
      * destroy this deque and all it's members and free all memory
      */
     ~my_deque () {
-        // <your code>
-        using namespace std;
         
-        if(deque_root) {
+        if(deque_root)
             clear();
-        }
         
         assert(valid());
     }
@@ -789,7 +758,6 @@ public:
             destroy(_a, temp, end());
             deque_size = rhs.size();
             end_index = begin_index + deque_size;
-            
         }
         else { //rhs is too big to fit
             clear();
@@ -909,18 +877,19 @@ public:
      * clears this deque, destroying all members and deallocating all memory
      */
     void clear () {
-        // <your code>
-        using namespace std;
         
-        if(deque_root)
-            destroy(_a, begin(), end());
+        //destroy the elements
+        destroy(_a, begin(), end());
         
+        //deallocate elements
         for(size_t i = 0; i < row_count; ++i)
             _a.deallocate(deque_root[i], INITIAL_ROW_SIZE);
         
+        //destroy/deallocate the pointers
         destroy(_ap, deque_root, deque_root + row_count);
         _ap.deallocate(deque_root, row_count);
         
+        //reset members
         deque_size = 0;
         deque_root = NULL;
         row_count = 0;
@@ -1015,7 +984,8 @@ public:
      * @return an iterator pointing to the value inserted
      */
     iterator insert (iterator spot, const_reference ins) {
-        
+        if(!deque_root)
+            allocate_rows(INITIAL_ROW_SIZE);
         if(((end_index & MOD_ROW_MASK) == 0) && (end_index >> DIV_ROW_SHIFT == row_count)) {
             push_back(T());
             --deque_size;
@@ -1038,7 +1008,7 @@ public:
      * removes (destroys) the value at the back of the deque
      */
     void pop_back () {
-        
+        assert(!empty());
         if(begin_index != end_index) {
             _a.destroy(&*(--end()));
             --end_index;
@@ -1051,7 +1021,7 @@ public:
      * removes (destroys) the value at the front of the deque
      */
     void pop_front () {
-        
+        assert(!empty());
         if(begin_index != end_index) {
             _a.destroy(&*begin());
             ++begin_index;
