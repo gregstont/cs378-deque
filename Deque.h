@@ -650,7 +650,7 @@ class my_deque {
          * <your documentation>
          */
         explicit my_deque (const allocator_type& a = allocator_type()) :
-            _a(a) //do I need this?
+            _a(a)
         {
             // <your code>
             using namespace std;
@@ -667,7 +667,7 @@ class my_deque {
          * <your documentation>
          */
         explicit my_deque (size_type s, const_reference v = value_type(), const allocator_type& a = allocator_type()) :
-            _a(a) //do I need this?
+            _a(a)
         {
 
             // <your code>
@@ -750,7 +750,7 @@ class my_deque {
             using namespace std;
             //cout << "IN DESTRUCT" << endl;
             //destroy (A& a, BI b, BI e)
-            //clear();
+            clear();
             
             for(size_t i = 0; i < row_count; ++i) {
                 //destroy(_a, deque_root[i], deque_root[i] + INITIAL_ROW_SIZE);
@@ -879,7 +879,7 @@ class my_deque {
          */
         void clear () {
             // <your code>
-            
+            destroy(_a, begin(), end());
             for(size_t i = 0; i < row_count; ++i) {
                 //destroy(_a, deque_root[i], deque_root[i] + INITIAL_ROW_SIZE);
                 _a.deallocate(deque_root[i], INITIAL_ROW_SIZE);
@@ -935,8 +935,9 @@ class my_deque {
             // <your code>
             using namespace std;
             //BI uninitialized_copy (A& a, II b, II e, BI x)
-            //_a.destroy(&*remove);
+            _a.destroy(&*remove);
             uninitialized_copy(_a, remove + 1, end(), remove);
+            _a.destroy(&*(--end()));
             
             --deque_size;
             --end_index;
@@ -1004,6 +1005,7 @@ class my_deque {
         void pop_back () {
             // <your code>
             if(begin_index != end_index) {
+                _a.destroy(&*(--end()));
                 --end_index;
                 --deque_size;
             }
@@ -1015,7 +1017,10 @@ class my_deque {
          */
         void pop_front () {
             // <your code>
+            //_a.destroy(&((*this)[begin_index]));
+            //_a.destroy(&*begin());
             if(begin_index != end_index) {
+                _a.destroy(&*begin());
                 ++begin_index;
                 --deque_size;
             }
@@ -1034,7 +1039,7 @@ class my_deque {
             using namespace std;
             //cout << "push_back:" << val << endl;
             if(((end_index & MOD_ROW_MASK) == 0) && (end_index >> DIV_ROW_SHIFT == row_count)) { //row full
-                //cout << "adding row" << endl;
+                cout << "adding row" << endl;
                 //add new row pointer
                 T** new_pointers = _ap.allocate(row_count + 1); //BI uninitialized_copy (A& a, II b, II e, BI x) {
                 uninitialized_copy (_ap, deque_root, deque_root + row_count, new_pointers);

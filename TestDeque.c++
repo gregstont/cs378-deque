@@ -115,17 +115,77 @@ TYPED_TEST_CASE(TestDeque, my_types);
     //ASSERT_EQ(e[0], 8);
     //d.print_deque();
 }*/
+
 /*
 TEST(TestDeque, push_back_7) {
     
     //ALL_OF_IT
     using namespace std;
-    vector<int> vi;
-    vi.push_back(9);
-    my_deque< vector<int> > d;
-    //d.push_back(vi);
+    vector<string> vi;
+    vi.push_back("sdfsdfsdfsdfdsfasf");
+    my_deque< vector<string> > d;
+    d.push_back(vi);
 }
+
+TEST(TestDeque, push_back_7) {
+    
+    //ALL_OF_IT
+    using namespace std;
+    vector<int> vi;
+    vi.push_back(1);
+    my_deque< vector<int> > d;
+    d.push_back(vi);
+}
+
+TEST(TestDeque, push_back_7) {
+    
+    //ALL_OF_IT
+    using namespace std;
+    //vector<string> vi;
+    //vi.push_back("Sdfsdf");
+    my_deque< string > d;
+    cout << "deque made" << endl;
+    d.push_back("Sdf");
+    cout << "pushed" << endl;
+}
+ 
+
+TEST(TestDeque, erase_1) {
+    //ALL_OF_IT
+    using namespace std;
+    my_deque<string> d;
+    d.push_back("7");
+    d.push_back("9");
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], "7");
+    ASSERT_EQ(d[1], "9");
+    
+    d.erase(d.begin());
+    ASSERT_EQ(d.size(), 1);
+    ASSERT_EQ(d[0], "9");
+    
+}
+
+TEST(TestDeque, erase_1) {
+    //ALL_OF_IT
+    using namespace std;
+    my_deque<string> d;
+    d.push_back("7");
+    d.push_back("9");
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], "7");
+    ASSERT_EQ(d[1], "9");
+    
+    d.pop_back();
+    ASSERT_EQ(d.size(), 1);
+    ASSERT_EQ(d[0], "7");
+    
+}
+ 
  */
+
+
+
 
  TYPED_TEST(TestDeque, Empty) {
     using namespace std;
