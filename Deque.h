@@ -948,8 +948,9 @@ public:
      * @return an iterator pointing past the value erased
      */
     iterator erase (iterator remove) {
-        _a.destroy(&*remove);
-        uninitialized_copy(_a, remove + 1, end(), remove);
+        //_a.destroy(&*remove);
+        //uninitialized_copy(_a, remove + 1, end(), remove);
+        std::copy(remove + 1, end(), remove);
         _a.destroy(&*(--end()));
         
         --deque_size;

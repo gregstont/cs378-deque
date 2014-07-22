@@ -121,7 +121,23 @@ ASSERT_EQ(d[0], 7);
 ASSERT_EQ(d[1], 77);
 ASSERT_EQ(d[2], 9);
     //d.print_deque();
+}
+TEST(TestDeque, erase_1) {
+    //ALL_OF_IT
+    using namespace std;
+    my_deque<string> d;
+    d.push_back("7");
+    d.push_back("9");
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], "7");
+    ASSERT_EQ(d[1], "9");
+    
+    d.erase(d.begin());
+    ASSERT_EQ(d.size(), 1);
+    ASSERT_EQ(d[0], "9");
+    
 }*/
+
 
 TYPED_TEST(TestDeque, Empty) {
     using namespace std;
