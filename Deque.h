@@ -1,7 +1,8 @@
 // ----------------------
 // projects/deque/Deque.h
 // Copyright (C) 2014
-// Glenn P. Downing
+// Taylor Gregston
+// Glenn P. Downing (skeleton)
 // ----------------------
 
 #ifndef Deque_h
@@ -31,7 +32,15 @@ using std::rel_ops::operator>=;
 // defines
 // -------
 
-#define DIV_ROW_SHIFT       4
+/**
+ * This deque will use rows of size INITIAL_ROW_SIZE.
+ * That value must be a power of 2 in the implementation because
+ * it allows us to replace the expensive divide and mod with 
+ * bit shifts and masking.
+ * The following constraints must be adhered to!
+ */
+
+#define DIV_ROW_SHIFT       4   // THIS VALUE MUST BE == log2(INITIAL_ROW_SIZE)
 #define INITIAL_ROW_SIZE    16  // THIS VALUE MUST BE == 2^DIV_ROW_SHIFT
 #define MOD_ROW_MASK        15  // THIS VALUE MUST BE == INITIAL_ROW_SIZE - 1
 
@@ -45,7 +54,6 @@ BI destroy (A& a, BI b, BI e) {
     using namespace std;
     while (b != e) {
         --e;
-        //cout << "destroy:" << endl;
         a.destroy(&*e);}
     return b;
 }
@@ -144,8 +152,6 @@ public:
      * @return  true if the lhs and rhs have same value and number of items
      */
     friend bool operator == (const my_deque& lhs, const my_deque& rhs) {
-        // <your code>
-        // you must use std::equal()
         return (lhs.size() == rhs.size()) && std::equal(lhs.begin(), lhs.end(), rhs.begin());
     }
     
@@ -160,8 +166,6 @@ public:
      * @return  true if the lhs is less than the rhs
      */
     friend bool operator < (const my_deque& lhs, const my_deque& rhs) {
-        // <your code>
-        // you must use std::lexicographical_compare()
         return std::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
     }
     
@@ -196,10 +200,8 @@ private:
         cout << "Printing; size:" << deque_size << " rows:" << row_count << endl;
         for(size_t i = 0; i < row_count; ++i) {
             cout << "\tROW" << i << ": ";
-            for(int j = 0; j < INITIAL_ROW_SIZE; ++j) {
-                //T temp = deque_root[i][j];
+            for(int j = 0; j < INITIAL_ROW_SIZE; ++j)
                 cout << deque_root[i][j] << "  ";
-            }
             cout << endl;
         }
         cout << "Done printing" << endl;
@@ -210,22 +212,15 @@ private:
      * @param   num_elements the number of elements this container should hold
      */
     void allocate_rows(size_type num_elements) {
-        using namespace std;
-        //cout << "allocate_rows:" << num_elements << endl;
+        row_count = (num_elements + INITIAL_ROW_SIZE - 1) / INITIAL_ROW_SIZE;
         
-        size_type rows_to_make = (num_elements + INITIAL_ROW_SIZE - 1) / INITIAL_ROW_SIZE;
+        //allocate/construct pointers
+        deque_root = _ap.allocate(row_count);
+        uninitialized_fill (_ap, deque_root, deque_root + row_count, (T*)0 );
         
-        //cout << "allocate_rows:" << num_elements << " rows:" << rows_to_make << endl;
-        T** pointers = _ap.allocate(rows_to_make);
-        
-        T* temp_p;
-        uninitialized_fill (_ap, pointers, pointers + rows_to_make, temp_p );
-        
-        for(size_type i = 0; i < rows_to_make; ++i) {
-            pointers[i] = _a.allocate(INITIAL_ROW_SIZE);
-        }
-        deque_root = pointers;
-        row_count = rows_to_make;
+        //allocate rows
+        for(size_type i = 0; i < row_count; ++i)
+            deque_root[i] = _a.allocate(INITIAL_ROW_SIZE);
     }
     
 public:
@@ -327,7 +322,6 @@ public:
          * @return  the iterator
          */
         iterator (my_deque *owner_, size_t index_) {
-            // <your code>
             owner = owner_;
             index = index_;
             assert(valid());
@@ -371,7 +365,6 @@ public:
          * @returns iterator with its NEW value
          */
         iterator& operator ++ () {
-            // <your code>
             ++index;
             assert(valid());
             return *this;
@@ -397,7 +390,6 @@ public:
          * @returns iterator with its NEW value
          */
         iterator& operator -- () {
-            // <your code>
             --index;
             assert(valid());
             return *this;
@@ -532,7 +524,6 @@ public:
         bool valid () const {
             return (index <= owner->end_index) && (owner != NULL);
         }
-        
         
         
         
@@ -696,7 +687,7 @@ public:
     {
         allocate_rows(s);
         deque_size = s;
-        begin_index = 0; //TODO: should this be somewhere different?
+        begin_index = 0; //should this be somewhere different?
         end_index = s;
         
         uninitialized_fill (_a, begin(), end(), v);
@@ -715,7 +706,7 @@ public:
         allocate_rows(that.deque_size);
         
         deque_size = that.deque_size;
-        begin_index = 0; //INITIAL_ROW_SIZE / 2; //TODO: should this be somewhere different?
+        begin_index = 0; //should this be somewhere different?
         end_index = begin_index + deque_size;
         
         uninitialized_copy (_a, that.begin(), that.end(), begin());
@@ -783,9 +774,6 @@ public:
      * @return a reference to the value at index in this deque
      */
     reference operator [] (size_type index) {
-        // <your code>
-        // dummy is just to be able to compile the skeleton, remove it
-        
         size_type temp = index + begin_index;
         return deque_root[temp >> DIV_ROW_SHIFT][temp & MOD_ROW_MASK];
         
@@ -877,7 +865,6 @@ public:
      * clears this deque, destroying all members and deallocating all memory
      */
     void clear () {
-        
         //destroy the elements
         destroy(_a, begin(), end());
         
@@ -920,7 +907,6 @@ public:
      * @returns an iterator pointing to the first value
      */
     iterator begin () {
-        
         return iterator(this, begin_index);
     }
     
@@ -929,7 +915,6 @@ public:
      * @returns an iterator pointing to the first value
      */
     const_iterator begin () const {
-        // <your code>
         return const_iterator(this, begin_index);
     }
     
@@ -962,7 +947,6 @@ public:
      * @return an iterator pointing past the value erased
      */
     iterator erase (iterator remove) {
-        
         _a.destroy(&*remove);
         uninitialized_copy(_a, remove + 1, end(), remove);
         _a.destroy(&*(--end()));
@@ -1039,9 +1023,6 @@ public:
      * @param val the value to add to the deque
      */
     void push_back (const_reference val) {
-        
-        using namespace std;
-        
         if(!deque_root)
             allocate_rows(INITIAL_ROW_SIZE);
         if(((end_index & MOD_ROW_MASK) == 0) && (end_index >> DIV_ROW_SHIFT == row_count)) { //row full
@@ -1074,8 +1055,6 @@ public:
      * @param val the value to add to the deque
      */
     void push_front (const_reference val) {
-        
-        using namespace std;
         if(!deque_root)
             allocate_rows(INITIAL_ROW_SIZE);
         if(begin_index == 0) { //add row
@@ -1111,7 +1090,7 @@ public:
      * @param s the number of elements this deque should hold
      * @param v the value to fill any extra slots with
      */
-    void resize (size_type s, const_reference v = value_type()) {
+    void resize (size_type s, const_reference v = value_type()) { //This function should be rewritten so push and pop depend on it
         if(s > deque_size) { //expand deque
             size_type diff = s - deque_size;
             for(size_type i = 0; i < diff; ++i)

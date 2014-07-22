@@ -3044,35 +3044,6 @@ TYPED_TEST(TestDeque, const_it_cons_3) {
 
 
 
-/*
- WEIRD BUG -  not a const thing
- 
- TYPED_TEST(TestDeque, const_star_1) {
- ALL_OF_IT
- using namespace std;
- my_deque<int> d(45,3);
- d.push_back(7);
- //d.pop_back();
- cout << "bacl" << *--d.end() << endl;
- //d.push_front(6);
- //my_deque<int>::iterator ttt = d.begin();
- // *d.begin() = 8;
- //d.print_deque();
- 
- const my_deque<int> e(d);
- 
- 
- //ASSERT_EQ(e.size(), 46);
- //ASSERT_EQ(e[0], 8);
- //d.print_deque();
- }
- 
- */
-
-
-
-
-
 
 
 
