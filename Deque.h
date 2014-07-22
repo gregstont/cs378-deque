@@ -621,6 +621,25 @@ class my_deque {
         // constructors
         // ------------
     
+        void allocate_rows(size_type num_elements) {
+            using namespace std;
+            //cout << "allocate_rows:" << num_elements << endl;
+            
+            size_type rows_to_make = (num_elements + INITIAL_ROW_SIZE - 1) / INITIAL_ROW_SIZE;
+            
+            //cout << "allocate_rows:" << num_elements << " rows:" << rows_to_make << endl;
+            T** pointers = _ap.allocate(rows_to_make);
+            
+            T* temp_p;
+            uninitialized_fill (_ap, pointers, pointers + rows_to_make, temp_p );
+            
+            for(size_type i = 0; i < rows_to_make; ++i) {
+                pointers[i] = _a.allocate(INITIAL_ROW_SIZE);
+            }
+            deque_root = pointers;
+            row_count = rows_to_make;
+        }
+    
         void reset() { //TODO: make private
             using namespace std;
             
@@ -699,9 +718,9 @@ class my_deque {
         /**
          * <your documentation>
          */
-    my_deque (const my_deque& that) :
-        _a(that._a)
-    {
+        my_deque (const my_deque& that) :
+            _a(that._a)
+        {
 
             // <your code>
             using namespace std;
@@ -709,8 +728,9 @@ class my_deque {
             //BI uninitialized_copy (A& a, II b, II e, BI x) {
             
             
-            size_type rows_to_make = (that.deque_size + INITIAL_ROW_SIZE - 1) / INITIAL_ROW_SIZE;
+            //size_type rows_to_make = (that.deque_size + INITIAL_ROW_SIZE - 1) / INITIAL_ROW_SIZE;
             //cout << "rows to make " << rows_to_make << endl;
+            /*
             T** pointers = _ap.allocate(rows_to_make);
             
             T* temp_p;
@@ -718,14 +738,15 @@ class my_deque {
             
             for(size_type i = 0; i < rows_to_make; ++i) {
                 pointers[i] = _a.allocate(INITIAL_ROW_SIZE);
-            }
-            
-            row_count = rows_to_make;
+            }*/
+            allocate_rows(that.deque_size);
+        
+            //row_count = rows_to_make;
             deque_size = that.deque_size;
             begin_index = 0; //INITIAL_ROW_SIZE / 2; //TODO: should this be somewhere different?
             end_index = begin_index + deque_size;
             
-            deque_root = pointers;
+            //deque_root = pointers;
             //iterator temp = this->begin();
             //cout << "printt" << that[0] << endl;
             //cout << "begin" << that.begin_index << " end" << that.end_index << endl;
@@ -751,7 +772,7 @@ class my_deque {
             //cout << "IN DESTRUCT" << endl;
             //destroy (A& a, BI b, BI e)
             clear();
-            
+            /*
             for(size_t i = 0; i < row_count; ++i) {
                 //destroy(_a, deque_root[i], deque_root[i] + INITIAL_ROW_SIZE);
                 _a.deallocate(deque_root[i], INITIAL_ROW_SIZE);
@@ -759,6 +780,7 @@ class my_deque {
             //cout << "IN DESTRUCT2" << endl;
             //destroy(_ap, deque_root, deque_root + row_count + 1);
             _ap.deallocate(deque_root, row_count);
+             */
             assert(valid());
         }
 
@@ -771,7 +793,37 @@ class my_deque {
          */
         my_deque& operator = (const my_deque& rhs) {
             // <your code>
-            this(rhs);
+            //this(rhs);
+            using namespace std;
+            //cout << "in here" << endl;
+            
+            if(this == &rhs)
+                return *this;
+            if(rhs.size() == deque_size) //same size
+                std::copy(rhs.begin(), rhs.end(), begin());
+            else if (rhs.size() < deque_size) { //rhs smaller
+                iterator temp = std::copy(rhs.begin(), rhs.end(), begin());
+                destroy(_a, temp, end());
+                //resize(rhs.size());
+            }
+            
+            /*else if (rhs.size() <= capacity()) { //rhs larger but still fits
+                std::copy(that.begin(), that.begin() + size(), begin());
+                _e = my_uninitialized_copy(_a, that.begin() + size(), that.end(), end());
+            }*/
+            else { //rhs is too big to fit
+                //cout << "rhs is bigger" << endl;
+                clear();
+                //reserve(that.size());
+                //TODO: initialize rows
+                allocate_rows(rhs.size());
+                begin_index = 0;
+                uninitialized_copy(_a, rhs.begin(), rhs.end(), begin());
+                deque_size = rhs.size();
+                end_index = deque_size;
+            }
+            
+            
             assert(valid());
             return *this;
         }
@@ -879,15 +931,24 @@ class my_deque {
          */
         void clear () {
             // <your code>
+            using namespace std;
+            //cout << "clear" << endl;
             destroy(_a, begin(), end());
             for(size_t i = 0; i < row_count; ++i) {
                 //destroy(_a, deque_root[i], deque_root[i] + INITIAL_ROW_SIZE);
                 _a.deallocate(deque_root[i], INITIAL_ROW_SIZE);
             }
         
-            //destroy(_ap, deque_root, deque_root + row_count + 1);
+            destroy(_ap, deque_root, deque_root + row_count);
             _ap.deallocate(deque_root, row_count);
-            reset();
+            
+            deque_size = 0;
+            deque_root = NULL;
+            row_count = 0;
+            begin_index = INITIAL_ROW_SIZE >> 1;
+            end_index = begin_index;
+            
+            //reset();
             assert(valid());
         }
 
@@ -1038,8 +1099,10 @@ class my_deque {
             // <your code>
             using namespace std;
             //cout << "push_back:" << val << endl;
+            if(!deque_root)
+                allocate_rows(INITIAL_ROW_SIZE);
             if(((end_index & MOD_ROW_MASK) == 0) && (end_index >> DIV_ROW_SHIFT == row_count)) { //row full
-                cout << "adding row" << endl;
+                //cout << "adding row" << endl;
                 //add new row pointer
                 T** new_pointers = _ap.allocate(row_count + 1); //BI uninitialized_copy (A& a, II b, II e, BI x) {
                 uninitialized_copy (_ap, deque_root, deque_root + row_count, new_pointers);
@@ -1072,6 +1135,8 @@ class my_deque {
         void push_front (const_reference val) {
             // <your code>
             using namespace std;
+            if(!deque_root)
+                allocate_rows(INITIAL_ROW_SIZE);
             if(begin_index == 0) { //add row
                 //cout << "adding row" << endl;
                 //add new row pointer
@@ -1141,7 +1206,19 @@ class my_deque {
          */
         void swap (my_deque& other) {
             // <your code>
-            
+            if (_a == other._a && _ap == other._ap) {
+                std::swap(deque_root, other.deque_root);
+                std::swap(row_count, other.row_count);
+                std::swap(deque_size, other.deque_size);
+                std::swap(begin_index, other.begin_index);
+                std::swap(end_index, other.end_index);
+            }
+            else {
+                my_deque x = *this;
+                *this = other;
+                other  = x;
+            }
+            /*
             std::swap(_a, other._a);
             std::swap(_ap, other._ap);
             std::swap(deque_root, other.deque_root);
@@ -1149,6 +1226,7 @@ class my_deque {
             std::swap(deque_size, other.deque_size);
             std::swap(begin_index, other.begin_index);
             std::swap(end_index, other.end_index);
+             */
 
             assert(valid());
         }
