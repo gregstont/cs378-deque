@@ -57,23 +57,13 @@ BI destroy (A& a, BI b, BI e) {
 template <typename A, typename II, typename BI>
 BI uninitialized_copy (A& a, II b, II e, BI x) {
     using namespace std;
-    //cout << "in copy." << endl;
     BI p = x;
-    //cout << "un copy2" << endl;
     try {
-        //cout << "in loop " << endl;
         while (b != e) {
-            //cout << "b:" << b->index << " e:" << e->index << endl;
-            //cout << "*b: " << endl;
-            //cout << *b << endl;
-
             a.construct(&*x, *b);
-            //cout << "*b4: " << endl;
-            //cout << "*b5: " << endl;
             ++b;
             ++x;
         }
-        //cout << "done copy" <<  endl;
     }
     catch (...) {
         destroy(a, p, x);
@@ -91,12 +81,10 @@ BI uninitialized_copy_backwards (A& a, II b, II e, BI x) {
     BI p = x;
     try {
         while (b != e) {
-            //cout << "uc:" << *b << " ";
             a.construct(&*x, *b);
             --b;
             --x;
         }
-        //cout << endl;
     }
     catch (...) {
         destroy(a, p, x);
@@ -217,11 +205,7 @@ class my_deque {
                 // -----------
                 // operator ==
                 // -----------
-            /*friend std::ostream& operator << (std::ostream& lhs, const iterator& rhs) {
-                using namespace std;
-                cout << "index:" << rhs.index << endl;
-                return lhs;
-            }*/
+
                 /**
                  * <your documentation>
                  */
@@ -308,10 +292,6 @@ class my_deque {
                  * <your documentation>
                  */
                 reference operator * () const {
-                    // <your code>
-                    // dummy is just to be able to compile the skeleton, remove it
-                    //static value_type dummy;
-                    //return dummy;
                     
                     return owner->deque_root[index >> DIV_ROW_SHIFT][index & MOD_ROW_MASK];
                 }
@@ -508,10 +488,6 @@ class my_deque {
                  * <your documentation>
                  */
                 reference operator * () const {
-                    // <your code>
-                    // dummy is just to be able to compile the skeleton, remove it
-                    //using namespace std;
-                    //cout << "* index:" << index << endl;
                     return owner->deque_root[index >> DIV_ROW_SHIFT][index & MOD_ROW_MASK];
                 }
 
@@ -640,17 +616,20 @@ class my_deque {
             row_count = rows_to_make;
         }
     
-        void reset() { //TODO: make private
+
+    
+        /**
+         * <your documentation>
+         */
+        explicit my_deque (const allocator_type& a = allocator_type()) :
+            _a(a)
+        {
+            // <your code>
             using namespace std;
             
             
-            //construct initial deque, 1 row
             T* the_first_row = _a.allocate(INITIAL_ROW_SIZE);
-            //T temp;// = 4;
-            //uninitialized_fill (_a, the_first_row, the_first_row + INITIAL_ROW_SIZE, temp );
-            
-            //construct the pointers (just one for now)
-            //typename A::template rebind<T*>::other _a2;
+
             T** pointers = _ap.allocate(1);
             T* temp_p;
             uninitialized_fill (_ap, pointers, pointers + 1, temp_p );
@@ -663,19 +642,6 @@ class my_deque {
             (*pointers) = the_first_row;
             
             deque_root = pointers;
-        }
-    
-        /**
-         * <your documentation>
-         */
-        explicit my_deque (const allocator_type& a = allocator_type()) :
-            _a(a)
-        {
-            // <your code>
-            using namespace std;
-            
-            
-            reset();
             
             
             //cout << "HEWERREREE" << endl;
@@ -721,41 +687,15 @@ class my_deque {
         my_deque (const my_deque& that) :
             _a(that._a)
         {
-
-            // <your code>
             using namespace std;
-            
-            //BI uninitialized_copy (A& a, II b, II e, BI x) {
-            
-            
-            //size_type rows_to_make = (that.deque_size + INITIAL_ROW_SIZE - 1) / INITIAL_ROW_SIZE;
-            //cout << "rows to make " << rows_to_make << endl;
-            /*
-            T** pointers = _ap.allocate(rows_to_make);
-            
-            T* temp_p;
-            uninitialized_fill (_ap, pointers, pointers + rows_to_make, temp_p );
-            
-            for(size_type i = 0; i < rows_to_make; ++i) {
-                pointers[i] = _a.allocate(INITIAL_ROW_SIZE);
-            }*/
+
             allocate_rows(that.deque_size);
         
-            //row_count = rows_to_make;
             deque_size = that.deque_size;
             begin_index = 0; //INITIAL_ROW_SIZE / 2; //TODO: should this be somewhere different?
             end_index = begin_index + deque_size;
             
-            //deque_root = pointers;
-            //iterator temp = this->begin();
-            //cout << "printt" << that[0] << endl;
-            //cout << "begin" << that.begin_index << " end" << that.end_index << endl;
-            //if(that.begin() == that.end())
-            //    cout << "they are equal" << endl;
-            //that.begin();
-            //cout << "tag1 "  << *(that.begin()) << endl;
-            uninitialized_copy (_a, that.begin(), that.end(), begin()); //should start working with const iterator
-            //cout << "tag2" << endl;
+            uninitialized_copy (_a, that.begin(), that.end(), begin());
             assert(valid());
         }
 
@@ -769,19 +709,10 @@ class my_deque {
         ~my_deque () {
             // <your code>
             using namespace std;
-            //cout << "IN DESTRUCT" << endl;
-            //destroy (A& a, BI b, BI e)
+
             if(deque_root)
                 clear();
-            /*
-            for(size_t i = 0; i < row_count; ++i) {
-                //destroy(_a, deque_root[i], deque_root[i] + INITIAL_ROW_SIZE);
-                _a.deallocate(deque_root[i], INITIAL_ROW_SIZE);
-            }
-            //cout << "IN DESTRUCT2" << endl;
-            //destroy(_ap, deque_root, deque_root + row_count + 1);
-            _ap.deallocate(deque_root, row_count);
-             */
+
             assert(valid());
         }
 
@@ -793,33 +724,22 @@ class my_deque {
          * <your documentation>
          */
         my_deque& operator = (const my_deque& rhs) {
-            // <your code>
-            //this(rhs);
             using namespace std;
-            //cout << "in here" << endl;
             
             if(this == &rhs)
                 return *this;
             if(rhs.size() == deque_size) //same size
                 std::copy(rhs.begin(), rhs.end(), begin());
             else if (rhs.size() < deque_size) { //rhs smaller
-                //cout << "rhs is SMALLER" << endl;
                 iterator temp = std::copy(rhs.begin(), rhs.end(), begin());
                 destroy(_a, temp, end());
                 deque_size = rhs.size();
                 end_index = begin_index + deque_size;
-                //resize(rhs.size());
+
             }
-            
-            /*else if (rhs.size() <= capacity()) { //rhs larger but still fits
-                std::copy(that.begin(), that.begin() + size(), begin());
-                _e = my_uninitialized_copy(_a, that.begin() + size(), that.end(), end());
-            }*/
             else { //rhs is too big to fit
-                //cout << "rhs is bigger" << endl;
+ 
                 clear();
-                //reserve(that.size());
-                //TODO: initialize rows
                 allocate_rows(rhs.size());
                 begin_index = 0;
                 uninitialized_copy(_a, rhs.begin(), rhs.end(), begin());
@@ -845,8 +765,7 @@ class my_deque {
             
             size_type temp = index + begin_index;
             return deque_root[temp >> DIV_ROW_SHIFT][temp & MOD_ROW_MASK];
-            //static value_type dummy;
-            //return dummy;
+
         }
 
         /**
@@ -864,10 +783,6 @@ class my_deque {
          * <your documentation>
          */
         reference at (size_type index) {
-            // <your code>
-            // dummy is just to be able to compile the skeleton, remove it
-            //static value_type dummy;
-            //return dummy;
             if(index >= deque_size)
                 throw std::out_of_range("at index out of range");
             size_type temp = index + begin_index;
@@ -889,13 +804,8 @@ class my_deque {
          * <your documentation>
          */
         reference back () {
-            // <your code>
-            // dummy is just to be able to compile the skeleton, remove it
             
             return deque_root[(end_index - 1) >> DIV_ROW_SHIFT][(end_index - 1) & MOD_ROW_MASK];
-            
-            //static value_type dummy;
-            //return dummy;
         }
 
         /**
@@ -913,8 +823,7 @@ class my_deque {
          * <your documentation>
          */
         iterator begin () {
-            // <your code>
-            //std::cout << "returning begin at index:" << begin_index << std::endl;
+
             return iterator(this, begin_index);
         }
 
@@ -936,14 +845,12 @@ class my_deque {
         void clear () {
             // <your code>
             using namespace std;
-            //cout << "clear:" << deque_size << endl;
+
             if(deque_root)
                 destroy(_a, begin(), end());
-            //cout << "nextclear" << endl;
-            for(size_t i = 0; i < row_count; ++i) {
-                //destroy(_a, deque_root[i], deque_root[i] + INITIAL_ROW_SIZE);
+
+            for(size_t i = 0; i < row_count; ++i)
                 _a.deallocate(deque_root[i], INITIAL_ROW_SIZE);
-            }
         
             destroy(_ap, deque_root, deque_root + row_count);
             _ap.deallocate(deque_root, row_count);
@@ -954,7 +861,6 @@ class my_deque {
             begin_index = INITIAL_ROW_SIZE >> 1;
             end_index = begin_index;
             
-            //reset();
             assert(valid());
         }
 
@@ -977,9 +883,6 @@ class my_deque {
          * <your documentation>
          */
         iterator end () {
-            // <your code>
-            //std::cout << "returning end at index:" << end_index << std::endl;
-
             return iterator(this, end_index);
         }
 
@@ -987,7 +890,6 @@ class my_deque {
          * <your documentation>
          */
         const_iterator end () const {
-            // <your code>
             return const_iterator(this, end_index);
         }
 
@@ -999,9 +901,7 @@ class my_deque {
          * <your documentation>
          */
         iterator erase (iterator remove) {
-            // <your code>
-            using namespace std;
-            //BI uninitialized_copy (A& a, II b, II e, BI x)
+
             _a.destroy(&*remove);
             uninitialized_copy(_a, remove + 1, end(), remove);
             _a.destroy(&*(--end()));
@@ -1020,17 +920,8 @@ class my_deque {
          * <your documentation>
          */
         reference front () {
-            // <your code>
-            // dummy is just to be able to compile the skeleton, remove it
-            //static value_type dummy;
-            //return (this)[begin_index];
-            //return dummy;
-            //size_type temp = index + begin_index;
-            //using namespace  std;
-            //cout << "in const front" << endl;
+
             return deque_root[begin_index >> DIV_ROW_SHIFT][begin_index & MOD_ROW_MASK];
-            
-            //return (*this)[begin_index];
         }
 
         /**
@@ -1047,7 +938,7 @@ class my_deque {
          * <your documentation>
          */
         iterator insert (iterator spot, const_reference ins) {
-            // <your code>
+
             if(((end_index & MOD_ROW_MASK) == 0) && (end_index >> DIV_ROW_SHIFT == row_count)) {
                 push_back(T());
                 --deque_size;
@@ -1070,7 +961,7 @@ class my_deque {
          * <your documentation>
          */
         void pop_back () {
-            // <your code>
+
             if(begin_index != end_index) {
                 _a.destroy(&*(--end()));
                 --end_index;
@@ -1083,9 +974,7 @@ class my_deque {
          * <your documentation>
          */
         void pop_front () {
-            // <your code>
-            //_a.destroy(&((*this)[begin_index]));
-            //_a.destroy(&*begin());
+
             if(begin_index != end_index) {
                 _a.destroy(&*begin());
                 ++begin_index;
@@ -1102,19 +991,17 @@ class my_deque {
          * <your documentation>
          */
         void push_back (const_reference val) {
-            // <your code>
+
             using namespace std;
-            //cout << "push_back:" << val << endl;
+
             if(!deque_root)
                 allocate_rows(INITIAL_ROW_SIZE);
             if(((end_index & MOD_ROW_MASK) == 0) && (end_index >> DIV_ROW_SHIFT == row_count)) { //row full
-                //cout << "adding row" << endl;
                 //add new row pointer
-                T** new_pointers = _ap.allocate(row_count + 1); //BI uninitialized_copy (A& a, II b, II e, BI x) {
+                T** new_pointers = _ap.allocate(row_count + 1);
                 uninitialized_copy (_ap, deque_root, deque_root + row_count, new_pointers);
                 
                 //destroy old pointers
-                //destroy(_ap, deque_root, deque_root + row_count + 1);
                 _ap.deallocate(deque_root, row_count);
                 
                 //point to new
@@ -1126,7 +1013,6 @@ class my_deque {
                 deque_root[row_count - 1] = _a.allocate(INITIAL_ROW_SIZE);
                 
             }
-            //else { //no need for else?
             _a.construct(&deque_root[end_index >> DIV_ROW_SHIFT][end_index & MOD_ROW_MASK], val);
             ++end_index;
             ++deque_size;
@@ -1139,24 +1025,22 @@ class my_deque {
          * <your documentation>
          */
         void push_front (const_reference val) {
-            // <your code>
+            
             using namespace std;
             if(!deque_root)
                 allocate_rows(INITIAL_ROW_SIZE);
             if(begin_index == 0) { //add row
-                //cout << "adding row" << endl;
                 //add new row pointer
-                T** new_pointers = _ap.allocate(row_count + 1); //BI uninitialized_copy (A& a, II b, II e, BI x) {
+                T** new_pointers = _ap.allocate(row_count + 1);
                 uninitialized_copy (_ap, deque_root, deque_root + row_count, new_pointers + 1);
                 
                 //destroy old pointers
-                //destroy(_ap, deque_root, deque_root + row_count + 1);
                 _ap.deallocate(deque_root, row_count);
                 
                 //point to new
                 deque_root = new_pointers;
-                
                 ++row_count;
+                
                 //allocate new row
                 deque_root[0] = _a.allocate(INITIAL_ROW_SIZE);
                 begin_index += INITIAL_ROW_SIZE;
@@ -1177,7 +1061,6 @@ class my_deque {
          * <your documentation>
          */
         void resize (size_type s, const_reference v = value_type()) {
-            // <your code>
             if(s > deque_size) { //expand deque
                 size_type diff = s - deque_size;
                 for(size_type i = 0; i < diff; ++i)
@@ -1199,7 +1082,6 @@ class my_deque {
          * <your documentation>
          */
         size_type size () const {
-            // <your code>
             return deque_size;
         }
 
@@ -1211,7 +1093,6 @@ class my_deque {
          * <your documentation>
          */
         void swap (my_deque& other) {
-            // <your code>
             if (_a == other._a && _ap == other._ap) {
                 std::swap(deque_root, other.deque_root);
                 std::swap(row_count, other.row_count);
@@ -1224,16 +1105,6 @@ class my_deque {
                 *this = other;
                 other  = x;
             }
-            /*
-            std::swap(_a, other._a);
-            std::swap(_ap, other._ap);
-            std::swap(deque_root, other.deque_root);
-            std::swap(row_count, other.row_count);
-            std::swap(deque_size, other.deque_size);
-            std::swap(begin_index, other.begin_index);
-            std::swap(end_index, other.end_index);
-             */
-
             assert(valid());
         }
 };
