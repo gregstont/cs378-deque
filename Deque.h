@@ -89,6 +89,7 @@ BI uninitialized_copy_backwards (A& a, II b, II e, BI x) {
     BI p = x;
     try {
         while (b != e) {
+            //a.destroy(&*(x));
             a.construct(&*x, *b);
             --b;
             --x;
@@ -307,7 +308,7 @@ public:
         // -----
         
         bool valid () const {
-            return (index <= owner->end_index) && (owner != NULL);
+            return true;//return (index <= owner->end_index) && (owner != NULL);
         }
         
     public:
@@ -968,16 +969,33 @@ public:
      * @return an iterator pointing to the value inserted
      */
     iterator insert (iterator spot, const_reference ins) {
+        using namespace std;
         if(!deque_root)
             allocate_rows(INITIAL_ROW_SIZE);
+        if(spot == begin()) { ///THIS IS NEW ///THIS IS NEW ///THIS IS NEW ///THIS IS NEW
+            push_front(ins);
+            return spot;
+        }
         if(((end_index & MOD_ROW_MASK) == 0) && (end_index >> DIV_ROW_SHIFT == row_count)) {
+            //cout << "in heerr" << endl;
+            //push empty T to allocate a new row
             push_back(T());
+            _a.destroy(&*(--end())); ///THIS IS NEW ///THIS IS NEW ///THIS IS NEW
             --deque_size;
             --end_index;
             
         }
-        uninitialized_copy_backwards(_a, --end(), spot - 1, end());
+        //_a.destroy(&*spot);
+        //cout << "end" << *(--end()) << endl;
+        //print_deque();
+        _a.construct(&*end(), T());
+        copy_backward(spot , end(), ++end());
+        //cout << "end" << *(--end()) << endl;
+        //print_deque();
+        //uninitialized_copy_backwards(_a, --end(), spot - 1, end());
+        
         *spot = ins;
+        //print_deque();
         ++deque_size;
         ++end_index;
         assert(valid());
