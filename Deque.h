@@ -771,7 +771,8 @@ class my_deque {
             using namespace std;
             //cout << "IN DESTRUCT" << endl;
             //destroy (A& a, BI b, BI e)
-            clear();
+            if(deque_root)
+                clear();
             /*
             for(size_t i = 0; i < row_count; ++i) {
                 //destroy(_a, deque_root[i], deque_root[i] + INITIAL_ROW_SIZE);
@@ -802,8 +803,11 @@ class my_deque {
             if(rhs.size() == deque_size) //same size
                 std::copy(rhs.begin(), rhs.end(), begin());
             else if (rhs.size() < deque_size) { //rhs smaller
+                //cout << "rhs is SMALLER" << endl;
                 iterator temp = std::copy(rhs.begin(), rhs.end(), begin());
                 destroy(_a, temp, end());
+                deque_size = rhs.size();
+                end_index = begin_index + deque_size;
                 //resize(rhs.size());
             }
             
@@ -932,8 +936,10 @@ class my_deque {
         void clear () {
             // <your code>
             using namespace std;
-            //cout << "clear" << endl;
-            destroy(_a, begin(), end());
+            //cout << "clear:" << deque_size << endl;
+            if(deque_root)
+                destroy(_a, begin(), end());
+            //cout << "nextclear" << endl;
             for(size_t i = 0; i < row_count; ++i) {
                 //destroy(_a, deque_root[i], deque_root[i] + INITIAL_ROW_SIZE);
                 _a.deallocate(deque_root[i], INITIAL_ROW_SIZE);

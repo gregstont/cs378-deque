@@ -228,8 +228,72 @@ TEST(TestDeque, clear_1) {
     ASSERT_EQ(d.size(), 1);
     //ASSERT_EQ(d[0], 2);
     
-}*/
+}
+TEST(TestDeque, assignment_1) {
+    //ALL_OF_IT
+    using namespace std;
+    my_deque<int> e;
+    e.push_back(9);
+    e.push_back(9);
+    e.push_back(9);
+    e.push_back(9);
+    {
+        my_deque<int> d;
+        d.push_back(7);
+        d.push_back(9);
+        ASSERT_EQ(d.size(), 2);
+        ASSERT_EQ(d[0], 7);
+        ASSERT_EQ(d[1], 9);
+        cout << "assign" << endl;
+        e = (const my_deque<int>)d;
+        //d.push_back("6");
+        
+    }
+    e.push_back(5);
+    cout << "testdone" << endl << endl;
+    //e.push_back(10);
+    
+    //ASSERT_EQ(e.size(), 3);
+    //ASSERT_EQ(e[0], 7);
+    //ASSERT_EQ(e[1], 9);
+    //ASSERT_EQ(e[2], 10);
+    
+    //d.print_deque();
+}
 
+TEST(TestDeque, assignment_1) {
+    //ALL_OF_IT
+    using namespace std;
+    my_deque<string> e;
+    e.push_back("9");
+    e.push_back("9");
+    e.push_back("9");
+    e.push_back("9");
+    {
+        my_deque<string> d;
+        d.push_back("7");
+        d.push_back("9");
+        ASSERT_EQ(d.size(), 2);
+        ASSERT_EQ(d[0], "7");
+        ASSERT_EQ(d[1], "9");
+        
+        //cout << "assign-before" << endl;
+        e = d;
+        //cout << "assign-after" << endl << endl;
+        //d.push_back("6");
+        
+    }
+    e.push_back("10");
+    //cout << "testdone" << endl << endl;
+    
+    //ASSERT_EQ(e.size(), 3);
+    //ASSERT_EQ(e[0], 7);
+    //ASSERT_EQ(e[1], 9);
+    //ASSERT_EQ(e[2], 10);
+    
+    //d.print_deque();
+}
+*/
 
 
 
