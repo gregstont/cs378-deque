@@ -1735,6 +1735,27 @@ TYPED_TEST(TestDeque, erase_3) {
     
 }
 
+TYPED_TEST(TestDeque, erase_4) {
+    ALL_OF_IT
+    using namespace std;
+    deque_type d;
+    d.push_back(7);
+    d.push_back(9);
+    d.push_back(11);
+    ASSERT_EQ(d.size(), 3);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 9);
+    ASSERT_EQ(d[2], 11);
+    
+    ASSERT_EQ(*(d.erase(++d.begin())), 11);
+    ASSERT_EQ(d.size(), 2);
+    ASSERT_EQ(d[0], 7);
+    ASSERT_EQ(d[1], 11);
+    
+
+    
+}
+
 TYPED_TEST(TestDeque, insert_1) {
     ALL_OF_IT
     using namespace std;
