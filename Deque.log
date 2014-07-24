@@ -1,3 +1,39 @@
+commit 3f7d7e12fdf7a50069e53827670ff443496a68a8
+Author: gregstont <gregstont@gmail.com>
+Date:   Thu Jul 24 17:36:27 2014 -0500
+
+    ready for submission
+
+commit bf03fc50dcf94743c51a7fcb9433c0ba927359ee
+Author: gregstont <gregstont@gmail.com>
+Date:   Tue Jul 22 18:40:58 2014 -0500
+
+    cleaned up more
+
+commit 12239c7cb6d759a0fe559f5d53b21524c336b00b
+Author: gregstont <gregstont@gmail.com>
+Date:   Tue Jul 22 12:59:46 2014 -0500
+
+    cleaned, valid fixed
+
+commit c4ff6f0fbb256e02531de144b3e439e0d01a280c
+Author: gregstont <gregstont@gmail.com>
+Date:   Tue Jul 22 12:33:38 2014 -0500
+
+    fixed leak in erase
+
+commit da6d069032162fc14b374c75f054c0a96dd6dfdc
+Author: gregstont <gregstont@gmail.com>
+Date:   Tue Jul 22 12:24:23 2014 -0500
+
+    fixed leak in insert
+
+commit 703084f0310f60ee65007b7de22085364bdfe9b3
+Author: gregstont <gregstont@gmail.com>
+Date:   Tue Jul 22 00:16:20 2014 -0500
+
+    closes #10; added log
+
 commit a389aedb97ab160a47fe373e8cdbb9c2f3fffc1f
 Author: gregstont <gregstont@gmail.com>
 Date:   Tue Jul 22 00:08:44 2014 -0500
