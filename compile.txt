@@ -1,0 +1,2 @@
+Deque.h: In member function ‘void my_deque<T, A>::print_deque()’:
+Deque.h:179:9: error: ‘cout’ was not declared in this scope

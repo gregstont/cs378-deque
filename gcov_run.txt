@@ -1,0 +1,267 @@
+Deque.gcno:not a gcov graph file
+TestDeque.gcda:cannot open data file, assuming not executed
+File 'TestDeque.c++'
+No executable lines
+No branches
+No calls
+Removing 'TestDeque.c++.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_algobase.h'
+No executable lines
+No branches
+No calls
+Removing 'stl_algobase.h.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_iterator.h'
+No executable lines
+No branches
+No calls
+Removing 'stl_iterator.h.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_iterator_base_types.h'
+No executable lines
+No branches
+No calls
+Removing 'stl_iterator_base_types.h.gcov'
+
+File '/usr/include/c++/4.7/ostream'
+No executable lines
+No branches
+No calls
+Removing 'ostream.gcov'
+
+File '/usr/include/gtest/gtest-printers.h'
+No executable lines
+No branches
+No calls
+Removing 'gtest-printers.h.gcov'
+
+File '/usr/include/gtest/internal/gtest-internal.h'
+No executable lines
+No branches
+No calls
+Removing 'gtest-internal.h.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_uninitialized.h'
+No executable lines
+No branches
+No calls
+Removing 'stl_uninitialized.h.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_iterator_base_funcs.h'
+No executable lines
+No branches
+No calls
+Removing 'stl_iterator_base_funcs.h.gcov'
+
+File '/usr/include/c++/4.7/bits/basic_string.h'
+No executable lines
+No branches
+No calls
+Removing 'basic_string.h.gcov'
+
+File '/usr/include/c++/4.7/streambuf'
+No executable lines
+No branches
+No calls
+Removing 'streambuf.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_deque.h'
+No executable lines
+No branches
+No calls
+Removing 'stl_deque.h.gcov'
+
+File '/usr/include/c++/4.7/sstream'
+No executable lines
+No branches
+No calls
+Removing 'sstream.gcov'
+
+File '/usr/include/c++/4.7/bits/deque.tcc'
+No executable lines
+No branches
+No calls
+Removing 'deque.tcc.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_construct.h'
+No executable lines
+No branches
+No calls
+Removing 'stl_construct.h.gcov'
+
+File '/usr/include/c++/4.7/bits/allocator.h'
+No executable lines
+No branches
+No calls
+Removing 'allocator.h.gcov'
+
+File '/usr/include/c++/4.7/ext/new_allocator.h'
+No executable lines
+No branches
+No calls
+Removing 'new_allocator.h.gcov'
+
+File '/usr/include/c++/4.7/bits/move.h'
+No executable lines
+No branches
+No calls
+Removing 'move.h.gcov'
+
+File '/usr/include/gtest/gtest.h'
+No executable lines
+No branches
+No calls
+Removing 'gtest.h.gcov'
+
+File 'Deque.h'
+No executable lines
+No branches
+No calls
+Removing 'Deque.h.gcov'
+
+File '/usr/include/c++/4.7/bits/basic_ios.h'
+No executable lines
+No branches
+No calls
+Removing 'basic_ios.h.gcov'
+
+File '/usr/include/gtest/internal/gtest-port.h'
+No executable lines
+No branches
+No calls
+Removing 'gtest-port.h.gcov'
+
+File '/usr/include/gtest/internal/gtest-param-util.h'
+No executable lines
+No branches
+No calls
+Removing 'gtest-param-util.h.gcov'
+
+File '/usr/include/c++/4.7/stdexcept'
+No executable lines
+No branches
+No calls
+Removing 'stdexcept.gcov'
+
+File '/usr/include/c++/4.7/bits/stl_bvector.h'
+No executable lines
+No branches
+No calls
+Removing 'stl_bvector.h.gcov'
+
+File '/usr/include/c++/4.7/iostream'
+No executable lines
+No branches
+No calls
+Removing 'iostream.gcov'
+
+File '/usr/include/c++/4.7/ext/concurrence.h'
+No executable lines
+No branches
+No calls
+Removing 'concurrence.h.gcov'
+
+File '/usr/include/c++/4.7/ext/type_traits.h'
+No executable lines
+No branches
+No calls
+Removing 'type_traits.h.gcov'
+
+File '/usr/include/gtest/internal/gtest-type-util.h'
+No executable lines
+No branches
+No calls
+Removing 'gtest-type-util.h.gcov'
+
+File '/usr/include/c++/4.7/bits/basic_string.tcc'
+No executable lines
+No branches
+No calls
+Removing 'basic_string.tcc.gcov'
+
+File '/usr/include/c++/4.7/istream'
+No executable lines
+No branches
+No calls
+Removing 'istream.gcov'
+
+File '/usr/include/c++/4.7/iomanip'
+No executable lines
+No branches
+No calls
+Removing 'iomanip.gcov'
+
+File '/usr/include/c++/4.7/exception'
+No executable lines
+No branches
+No calls
+Removing 'exception.gcov'
+
+File '/usr/include/gtest/gtest-message.h'
+No executable lines
+No branches
+No calls
+Removing 'gtest-message.h.gcov'
+
+File '/usr/include/gtest/gtest-test-part.h'
+No executable lines
+No branches
+No calls
+Removing 'gtest-test-part.h.gcov'
+
+File '/usr/include/gtest/internal/gtest-death-test-internal.h'
+No executable lines
+No branches
+No calls
+Removing 'gtest-death-test-internal.h.gcov'
+
+File '/usr/include/gtest/internal/gtest-string.h'
+No executable lines
+No branches
+No calls
+Removing 'gtest-string.h.gcov'
+
+File '/usr/include/c++/4.7/bits/locale_facets.h'
+No executable lines
+No branches
+No calls
+Removing 'locale_facets.h.gcov'
+
+File '/usr/include/c++/4.7/bits/ios_base.h'
+No executable lines
+No branches
+No calls
+Removing 'ios_base.h.gcov'
+
+File '/usr/include/c++/4.7/typeinfo'
+No executable lines
+No branches
+No calls
+Removing 'typeinfo.gcov'
+
+File '/usr/include/c++/4.7/ext/atomicity.h'
+No executable lines
+No branches
+No calls
+Removing 'atomicity.h.gcov'
+
+File '/usr/include/x86_64-linux-gnu/c++/4.7/bits/gthr-default.h'
+No executable lines
+No branches
+No calls
+Removing 'gthr-default.h.gcov'
+
+File '/usr/include/c++/4.7/bits/char_traits.h'
+No executable lines
+No branches
+No calls
+Removing 'char_traits.h.gcov'
+
+File '/usr/include/c++/4.7/new'
+No executable lines
+No branches
+No calls
+Removing 'new.gcov'
+
+No executable lines
