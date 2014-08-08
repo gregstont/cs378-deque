@@ -174,7 +174,7 @@ private:
     /**
      * print this deck to cout - for debugging only
      */
-    void print_deque() {
+    /*void print_deque() {
         using namespace std;
         cout << "Printing; size:" << deque_size << " rows:" << row_count << endl;
         for(size_t i = 0; i < row_count; ++i) {
@@ -184,7 +184,7 @@ private:
             cout << endl;
         }
         cout << "Done printing" << endl;
-    }
+    }*/
     
     /**
      * allocate some rows for the deque
