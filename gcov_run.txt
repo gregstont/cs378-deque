@@ -1,5 +1,4 @@
-Deque.gcno:not a gcov graph file
-TestDeque.gcda:cannot open data file, assuming not executed
+TestDeque.gcda:stamp mismatch with graph file
 File 'TestDeque.c++'
 No executable lines
 No branches
@@ -264,4 +263,3 @@ No branches
 No calls
 Removing 'new.gcov'
 
-No executable lines
